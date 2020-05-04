@@ -25,4 +25,3 @@ public class BallotsResults {
 		return "The party: " + this.party.getName() + " has received " + this.votesNumber + " votes\n";
 	}
 }
-

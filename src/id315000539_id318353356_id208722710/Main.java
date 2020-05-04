@@ -3,7 +3,7 @@ package id315000539_id318353356_id208722710;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.util.Vector;
 
 public class Main {
 	public static void main(String[] args) throws ageOutOfRange {
@@ -11,18 +11,18 @@ public class Main {
 		int choise;
 
 		// hard code:
-		ElectionRound firstRound = new ElectionRound(9, 2020); // election has a date
-		
-		List <Party> runningParties= new ArrayList<>(); //parties
+		ElectionRound firstRound = new ElectionRound(9, 2020); // election has a
+																// date
+
+		Vector<Party> runningParties = new Vector<>(); // parties
 		runningParties.add(new Party("Meretz", "Left", "09/08/1990"));
 		runningParties.add(new Party("HaLikud", "Right", "14/05/1980"));
 		runningParties.add(new Party("Kahol Lavan", "Center", "25/01/2018"));
 
-
 		firstRound.setRunningParties(runningParties); // election has parties
-		
-		List <Citizen> citizens= new ArrayList<>();
-		citizens.add(new Citizen("Yakir", 123456789, 1997, false ));
+
+		Vector<Citizen> citizens = new Vector<>();
+		citizens.add(new Citizen("Yakir", 123456789, 1997, false));
 		citizens.add(new Citizen("Ran", 303939155, 1996, false));
 		citizens.add(new Citizen("Yaeli", 208722719, 1997, false));
 		citizens.add(new Citizen("Shir", 246123784, 1995, true));
@@ -33,30 +33,30 @@ public class Main {
 		citizens.add(new Candidate("Miri Regev", 274958637, 1959, false, runningParties.get(1)));
 		citizens.add(new Candidate("Yair Lapid", 198365039, 1960, true, runningParties.get(2)));
 		citizens.add(new Candidate("Nitzan Horovitz", 284019372, 1962, false, runningParties.get(0)));
-	
-		
-		firstRound.setCitizens(citizens); //election has citizens
-		List <Citizen> voters= new ArrayList<>();
+
+		firstRound.setCitizens(citizens); // election has citizens
+		Vector<Citizen> voters = new Vector<>();
 		boolean isOldEnough;
 		for (int i = 0; i < citizens.size(); i++) {
-			isOldEnough=firstRound.setVoter(citizens.get(i));
-			if(isOldEnough) {
+			isOldEnough = firstRound.setVoter(citizens.get(i));
+			if (isOldEnough) {
 				voters.add(citizens.get(i)); // election has voters
 			}
 		}
-		
-		List <Ballot> ballots= new ArrayList<>();
+
+		Vector<Ballot> ballots = new Vector<>();
 		ballots.add(new CoronaBallot("Haifa", runningParties));
 		ballots.add(new MilitaryBallot("Beer Sheva", runningParties));
 		ballots.add(new Ballot("Tel aviv", runningParties));
-		
-		
-		firstRound.setBallotsAndCitizens(voters, ballots); //citizens get ballots && ballots get citizens
+
+		firstRound.setBallotsAndCitizens(voters, ballots); // citizens get
+															// ballots &&
+															// ballots get
+															// citizens
 		firstRound.setVoters(voters);
 		firstRound.setBallots(ballots); // election has ballots
-		
-		
-		//menu:
+
+		// menu:
 		do {
 			menu();
 			choise = scan.nextInt();
@@ -85,16 +85,16 @@ public class Main {
 				firstRound.showAllParties();
 				break;
 			case ELECTIONS:
-				if(!firstRound.getHasHappened()) {
+				if (!firstRound.getHasHappened()) {
 					firstRound.elections(scan);
 					firstRound.setHasHappened(true);
-				}else
+				} else
 					System.out.println("The voting has already happened. please press 9 to see results");
 				break;
 			case SHOW_ELECTION_RESULTS:
-				if(!firstRound.getHasHappened()) {
+				if (!firstRound.getHasHappened()) {
 					System.out.println("Can not show results until election started\n");
-				}else {
+				} else {
 					firstRound.ShowElectionResults();
 				}
 				break;
@@ -118,16 +118,18 @@ public class Main {
 
 	public static void menu() {
 		System.out.println("Hello and welcome to the elections program");
-		System.out.println(ADD_A_BALLOT+") To add a ballot, please press " + ADD_A_BALLOT);
-		System.out.println(ADD_A_CITIZEN+") To add a citizen to registered citizens, please press " + ADD_A_CITIZEN);
-		System.out.println(ADD_A_PARTY+") To add a party to registered parties compiting in this elecion , please press " + ADD_A_PARTY);
-		System.out.println(ADD_CITIZEN_AFFILIATED_WITH_A_PARTY+") To add a candidate to registered party, please press " + ADD_CITIZEN_AFFILIATED_WITH_A_PARTY);
-		System.out.println(SHOW_ALL_BALLOTS+") To show all ballots, please press " + SHOW_ALL_BALLOTS);
-		System.out.println(SHOW_ALL_CITIZENS+") To show all citizents registered, please press " + SHOW_ALL_CITIZENS);
-		System.out.println(SHOW_ALL_PARTIES+") To show all parties registered, please press " + SHOW_ALL_PARTIES);
-		System.out.println(ELECTIONS+") To start the elections, please press " + ELECTIONS);
-		System.out.println(SHOW_ELECTION_RESULTS+") To show the elecions result, please press " + SHOW_ELECTION_RESULTS);
-		System.out.println(EXIT+") To exit the system, please press " + EXIT);
+		System.out.println(ADD_A_BALLOT + ") To add a ballot, please press " + ADD_A_BALLOT);
+		System.out.println(ADD_A_CITIZEN + ") To add a citizen to registered citizens, please press " + ADD_A_CITIZEN);
+		System.out.println(ADD_A_PARTY
+				+ ") To add a party to registered parties compiting in this elecion , please press " + ADD_A_PARTY);
+		System.out.println(ADD_CITIZEN_AFFILIATED_WITH_A_PARTY
+				+ ") To add a candidate to registered party, please press " + ADD_CITIZEN_AFFILIATED_WITH_A_PARTY);
+		System.out.println(SHOW_ALL_BALLOTS + ") To show all ballots, please press " + SHOW_ALL_BALLOTS);
+		System.out.println(SHOW_ALL_CITIZENS + ") To show all citizents registered, please press " + SHOW_ALL_CITIZENS);
+		System.out.println(SHOW_ALL_PARTIES + ") To show all parties registered, please press " + SHOW_ALL_PARTIES);
+		System.out.println(ELECTIONS + ") To start the elections, please press " + ELECTIONS);
+		System.out.println(
+				SHOW_ELECTION_RESULTS + ") To show the elecions result, please press " + SHOW_ELECTION_RESULTS);
+		System.out.println(EXIT + ") To exit the system, please press " + EXIT);
 	}
 }
-
