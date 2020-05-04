@@ -1,6 +1,5 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -58,12 +57,9 @@ public class Ballot {
 	}
 
 	public void addVoter(Citizen voter) {
-		// if (potentialVoters < votersList.length) {
-		// if (votersList[potentialVoters] == null) {
 		votersList.add(voter); // (pointing at each other)
 		potentialVoters++;
-		// }
-		// }
+		
 	}
 
 	public boolean belongs(Citizen voter) {

@@ -1,6 +1,5 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
@@ -34,9 +33,7 @@ public class ElectionRound implements Menuable {
 		citizens = new Vector<>();
 	}
 
-	public boolean setCitizens(Vector<Citizen> citizens) { // boolean since it
-															// says so in the
-															// task
+	public boolean setCitizens(Vector<Citizen> citizens) { // boolean since it says so in the task
 		for (int i = 0; i < citizens.size(); i++) {
 			this.citizens.add(citizens.get(i));
 			numberOfCitizens++;
@@ -64,13 +61,7 @@ public class ElectionRound implements Menuable {
 
 	}
 
-	public boolean setRunningParties(Vector<Party> runningParties) { // boolean
-																		// since
-																		// it
-																		// says
-																		// so in
-																		// the
-																		// task
+	public boolean setRunningParties(Vector<Party> runningParties) { // boolean since it says so in the task
 		for (int i = 0; i < runningParties.size(); i++) {
 			this.runningParties.add(runningParties.get(i));
 			this.numberOfrunningParties++;
@@ -78,8 +69,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setBallots(Vector<Ballot> ballots) { // boolean since it says
-														// so in the task
+	public boolean setBallots(Vector<Ballot> ballots) { // boolean since it says so in the task
 		for (int i = 0; i < ballots.size(); i++) {
 			this.ballots.add(ballots.get(i));
 			this.numberOfBallots++;
@@ -87,9 +77,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setElectionMonth(int electionMonth) { // boolean since it
-															// says so in the
-															// task
+	public boolean setElectionMonth(int electionMonth) { // boolean since it says so in the task
 		if (this.electionMonth > 12 || electionMonth < 1) {
 			this.electionMonth = 1;
 			return false;
@@ -98,8 +86,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setElectionYear(int electionYear) { // boolean since it says
-														// so in the task
+	public boolean setElectionYear(int electionYear) { // boolean since it says so in the task
 		if (electionYear <= 0) {
 			this.electionYear = 2020;
 			return false;
@@ -129,14 +116,7 @@ public class ElectionRound implements Menuable {
 		return this.electionMonth == other.electionMonth && this.electionYear == other.electionYear;
 	}
 
-	public boolean setBallotsAndCitizens(Vector<Citizen> voters, Vector<Ballot> ballots) throws ageOutOfRange { // boolean
-																												// since
-																												// it
-																												// says
-																												// so
-																												// in
-																												// the
-																												// task
+	public boolean setBallotsAndCitizens(Vector<Citizen> voters, Vector<Ballot> ballots) throws ageOutOfRange { // boolean since it says so in the task
 		for (int i = 0; i < voters.size(); i++) {
 			for (int j = 0; j < ballots.size(); j++) {
 				if (ballots.get(j).belongs(voters.get(i))) {
@@ -148,14 +128,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) { // boolean
-																						// since
-																						// it
-																						// says
-																						// so
-																						// in
-																						// the
-																						// task
+	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) { // boolean since it says so in the task
 		Citizen temp = new Citizen(scan);
 		citizens.add(temp);
 		try {
