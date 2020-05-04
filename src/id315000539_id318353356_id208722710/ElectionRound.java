@@ -1,6 +1,5 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -52,7 +51,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public List<Citizen> getVoters() {
+	public Vector<Citizen> getVoters() {
 		return this.voters;
 	}
 

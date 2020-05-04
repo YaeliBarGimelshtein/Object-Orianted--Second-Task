@@ -60,11 +60,7 @@ public class Citizen {
 		return this.ballot;
 	}
 
-	public boolean setBallot(Ballot ballot) throws ageOutOfRange { // boolean
-																	// since it
-																	// says so
-																	// in the
-																	// task
+	public boolean setBallot(Ballot ballot) throws ageOutOfRange { // boolean since it says so un the taks
 		if (this.age <= 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {

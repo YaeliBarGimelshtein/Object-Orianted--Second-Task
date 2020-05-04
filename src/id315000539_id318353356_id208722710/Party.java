@@ -73,6 +73,7 @@ public class Party {
 			System.out.println("the candidadate was added successfuly");
 			return temp;
 		} catch (ageOutOfRange notBigEnough) {
+			System.out.println("not possible to add, not big enough");
 			return null;
 		}
 	}

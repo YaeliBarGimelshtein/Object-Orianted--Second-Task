@@ -33,8 +33,7 @@ public class Candidate extends Citizen {
 		return placeInParty;
 	}
 
-	public boolean setPlaceInParty(int placeInParty) { // boolean since it says
-														// so in the task
+	public boolean setPlaceInParty(int placeInParty) { // boolean since it says so in the task
 		this.placeInParty = placeInParty;
 		return true;
 	}
