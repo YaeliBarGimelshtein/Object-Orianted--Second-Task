@@ -1,6 +1,5 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
