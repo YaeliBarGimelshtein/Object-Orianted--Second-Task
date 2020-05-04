@@ -9,19 +9,19 @@ public class Candidate extends Citizen {
 	public Candidate(String name, int ID, int year, boolean isQuarantine, Party party) throws ageOutOfRange {
 		super(name, ID, year, isQuarantine);
 		this.affiliationToParty = party;
-		if(this.age<18) {
+		if (this.age < 18) {
 			throw new ageOutOfRange("Not legal to be a candidate yet");
-		}else {
-		party.addCandidate(this);
+		} else {
+			party.addCandidate(this);
 		}
 	}
 
 	public Candidate(Scanner scan, Party party) throws ageOutOfRange {
 		super(scan);
-		if(this.age<18) {
+		if (this.age < 18) {
 			throw new ageOutOfRange("Not legal to be a candidate yet");
-		}else {
-		this.affiliationToParty = party;
+		} else {
+			this.affiliationToParty = party;
 		}
 	}
 
@@ -33,7 +33,8 @@ public class Candidate extends Citizen {
 		return placeInParty;
 	}
 
-	public boolean setPlaceInParty(int placeInParty) { //boolean since it says so in the task
+	public boolean setPlaceInParty(int placeInParty) { // boolean since it says
+														// so in the task
 		this.placeInParty = placeInParty;
 		return true;
 	}
@@ -46,7 +47,6 @@ public class Candidate extends Citizen {
 	}
 
 	public String toString() {
-		return super.toString() + "He is also a Candidate, his party is " + affiliationToParty.getName()+".";
+		return super.toString() + "He is also a Candidate, his party is " + affiliationToParty.getName() + ".";
 	}
 }
-
