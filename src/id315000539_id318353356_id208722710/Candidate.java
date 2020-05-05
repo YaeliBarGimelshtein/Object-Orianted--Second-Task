@@ -6,7 +6,7 @@ public class Candidate extends Citizen {
 	private Party affiliationToParty;
 	private int placeInParty;
 
-	public Candidate(String name, int ID, int year, boolean isQuarantine, Party party) throws ageOutOfRange {
+	public Candidate(String name, int ID, int year, boolean isQuarantine, Party party) throws ageOutOfRange, IDOutOfRange {
 		super(name, ID, year, isQuarantine);
 		this.affiliationToParty = party;
 		if (this.age < 18) {
@@ -16,7 +16,7 @@ public class Candidate extends Citizen {
 		}
 	}
 
-	public Candidate(Scanner scan, Party party) throws ageOutOfRange {
+	public Candidate(Scanner scan, Party party) throws ageOutOfRange, IDOutOfRange {
 		super(scan);
 		if (this.age < 18) {
 			throw new ageOutOfRange("Not legal to be a candidate yet");
@@ -33,8 +33,7 @@ public class Candidate extends Citizen {
 		return placeInParty;
 	}
 
-	public boolean setPlaceInParty(int placeInParty) { // boolean since it says
-														// so in the task
+	public boolean setPlaceInParty(int placeInParty) { // boolean since it says so in the task
 		this.placeInParty = placeInParty;
 		return true;
 	}

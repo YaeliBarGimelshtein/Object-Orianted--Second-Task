@@ -1,6 +1,5 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -15,9 +14,9 @@ public class ElectionRound implements Menuable {
 	private Vector<Citizen> voters;
 	private Vector<Party> runningParties;
 	private Vector<Ballot> ballots;
-	private Vector<Citizen> citizens;
+	private Set<Citizen> citizens;
 
-	private int ActualNumberOfVoters = 0;
+	private int ActualNumberOfVoters = 0; //maybe delete...
 	private int numberOfrunningParties = 0;
 	private int numberOfBallots = 0;
 	private int numberOfCitizens = 0;
@@ -30,18 +29,18 @@ public class ElectionRound implements Menuable {
 		voters = new Vector<>();
 		runningParties = new Vector<>();
 		ballots = new Vector<>();
-		citizens = new Vector<>();
+		citizens = new Set<>();
 	}
 
-	public boolean setCitizens(Vector<Citizen> citizens) { // boolean since it says so in the task
-		for (int i = 0; i < citizens.size(); i++) {
-			this.citizens.add(citizens.get(i));
+	public boolean setCitizens(Set<Citizen> citizens) { // boolean since it says so in the task
+		for (int i = 0; i < citizens.getSet().size(); i++) {
+			this.citizens.add(citizens.getSet().get(i));
 			numberOfCitizens++;
 		}
 		return true;
 	}
 
-	public boolean setVoter(Citizen citizen) {
+	public boolean setVoter(Citizen citizen) throws IDOutOfRange {
 		try {
 			Citizen temp = new Citizen(citizen);
 			this.voters.add(temp);
@@ -52,7 +51,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public List<Citizen> getVoters() {
+	public Vector<Citizen> getVoters() {
 		return this.voters;
 	}
 
@@ -128,7 +127,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) { // boolean since it says so in the task
+	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) throws IDOutOfRange { // boolean since it says so in the task
 		Citizen temp = new Citizen(scan);
 		citizens.add(temp);
 		try {
@@ -179,8 +178,7 @@ public class ElectionRound implements Menuable {
 		return ActualNumberOfVoters;
 	}
 
-	private boolean setNumberOfVotersPerParty() { // boolean since it says so in
-													// the task
+	private boolean setNumberOfVotersPerParty() { // boolean since it says so in the task
 		for (int i = 0; i < ballots.size(); i++) {
 			Vector<BallotsResults> temp = ballots.get(i).getResults();
 			for (int j = 0; j < temp.size(); j++) {
@@ -220,7 +218,7 @@ public class ElectionRound implements Menuable {
 		numberOfBallots++;
 	}
 
-	public void addACitizen(Scanner scan) {
+	public void addACitizen(Scanner scan) throws IDOutOfRange {
 		System.out.println("You have chose to add a citizen, please enter details:");
 		setBallotAndASingleCitizen(scan, this.ballots);
 		numberOfCitizens++;
@@ -234,7 +232,7 @@ public class ElectionRound implements Menuable {
 		System.out.println("Party was added successfuly");
 	}
 
-	public void addACandidateToParty(Scanner scan) throws ageOutOfRange {
+	public void addACandidateToParty(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("You have chose to add a candidate to a party: please press the number of wanted party.");
 		for (int i = 0; i < runningParties.size(); i++) {
 			System.out.println((i + 1) + "--> " + runningParties.get(i).getName());
@@ -260,7 +258,7 @@ public class ElectionRound implements Menuable {
 	public void showAllCitizens() {
 		System.out.println("Here are all the citizens in this election:\n");
 		for (int i = 0; i < numberOfCitizens; i++) {
-			System.out.println(citizens.get(i));
+			System.out.println(citizens.getSet().get(i));
 		}
 		System.out.println();
 	}
