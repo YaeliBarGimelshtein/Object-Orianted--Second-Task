@@ -13,9 +13,9 @@ public class Citizen {
 	protected boolean isVoting;
 	protected boolean idCorrect;
 
-	public Citizen(String name, int ID, int year, boolean isQuarantine) throws IDOutOfRange  {
+	public Citizen(String name, int ID, int year, boolean isQuarantine)  {
 		this.name = name;
-		setID(ID);
+		this.ID=ID;
 		setYear(year);
 		this.isQuarantine = isQuarantine;
 		setAge();
@@ -26,26 +26,29 @@ public class Citizen {
 			System.out.println("please enter the citizen's name:");
 			scan.nextLine();
 			this.name = scan.nextLine();
-			System.out.println("please enter the citizen's ID:");
-			setID(scan.nextInt());
 			System.out.println("please enter the citizen's birth year:");
-			scan.nextLine();
 			this.birthYear = scan.nextInt();
 			System.out.println("please enter if the citizen is in quarantine (true/false):");
 			scan.nextLine();
 			this.isQuarantine = scan.nextBoolean();
 			setAge();
+			System.out.println("please enter the citizen's ID:");
+			setID(scan.nextInt());
 			}catch(IDOutOfRange wrongID){
+				int tempId;
 				do {
-					System.out.println("enter 9 digit ID");
-					idCorrect=setID(scan.nextInt());
+					System.out.println("Inccorect id. please enter 9 digit ID");
+					tempId= scan.nextInt();
+					idCorrect=checkId(tempId);
 				} while (!idCorrect);
+				this.ID=tempId;
 			}
 		}
 
-	public Citizen(Citizen citizen) throws ageOutOfRange, IDOutOfRange {
+
+	public Citizen(Citizen citizen) throws ageOutOfRange {
 		this.name = citizen.name;
-		setID(citizen.ID);
+		this.ID=citizen.ID;	
 		setYear(citizen.getYear());
 		this.isQuarantine = citizen.isQuarantine;
 		setAge();
@@ -107,6 +110,12 @@ public class Citizen {
 		this.ID=iD;
 		return true;
 		}
+	}
+	private boolean checkId(int idTemp) {
+		if(idTemp<100000000||idTemp>999999999) {
+			return false;
+		}
+		return true;
 	}
 
 	public String getName() {
