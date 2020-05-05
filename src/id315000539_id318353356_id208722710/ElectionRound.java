@@ -1,69 +1,66 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Vector;
 
-public class ElectionRound implements Menuable{
+public class ElectionRound implements Menuable {
 	public static int ELECTION_YEAR;
-	
+
 	private boolean hasHappened;
 
 	private int electionMonth;
 	private int electionYear;
 
-	private List <Citizen> voters;
-	private List <Party> runningParties;
-	private List <Ballot> ballots;
-	private List <Citizen> citizens;
-	
-	private int ActualNumberOfVoters = 0;
+	private Vector<Citizen> voters;
+	private Vector<Party> runningParties;
+	private Vector<Ballot> ballots;
+	private Set<Citizen> citizens;
+
+	private int ActualNumberOfVoters = 0; //maybe delete...
 	private int numberOfrunningParties = 0;
 	private int numberOfBallots = 0;
 	private int numberOfCitizens = 0;
 	private int numberOfvoters = 0;
-	
 
 	public ElectionRound(int electionMonth, int electionYear) {
 		setElectionMonth(electionMonth);
 		setElectionYear(electionYear);
 		ELECTION_YEAR = electionYear;
-		voters = new ArrayList<>();
-		runningParties = new ArrayList<>();
-		ballots = new ArrayList<>();
-		citizens = new ArrayList<>();
+		voters = new Vector<>();
+		runningParties = new Vector<>();
+		ballots = new Vector<>();
+		citizens = new Set<>();
 	}
 
-	public boolean setCitizens(List <Citizen> citizens) { //boolean since it says so in the task
-		for (int i = 0; i < citizens.size(); i++) {
-				this.citizens.add(citizens.get(i));
-				numberOfCitizens++;
+	public boolean setCitizens(Set<Citizen> citizens) { // boolean since it says so in the task
+		for (int i = 0; i < citizens.getSet().size(); i++) {
+			this.citizens.add(citizens.getSet().get(i));
+			numberOfCitizens++;
 		}
 		return true;
 	}
-	
 
-	public boolean setVoter(Citizen citizen) {
-			try {
-				Citizen temp = new Citizen(citizen);
-				this.voters.add(temp);
-				this.numberOfvoters++;
-			} catch (ageOutOfRange notBigEnough) {
-				return false;
-			}
+	public boolean setVoter(Citizen citizen) throws IDOutOfRange {
+		try {
+			Citizen temp = new Citizen(citizen);
+			this.voters.add(temp);
+			this.numberOfvoters++;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
+		}
 		return true;
 	}
 
-	public List <Citizen> getVoters() {
+	public Vector<Citizen> getVoters() {
 		return this.voters;
 	}
-	
-	public void setVoters(List<Citizen> voters) {
-		this.voters=voters;
-		
+
+	public void setVoters(Vector<Citizen> voters) {
+		this.voters = voters;
+
 	}
 
-	public boolean setRunningParties(List <Party> runningParties) { //boolean since it says so in the task
+	public boolean setRunningParties(Vector<Party> runningParties) { // boolean since it says so in the task
 		for (int i = 0; i < runningParties.size(); i++) {
 			this.runningParties.add(runningParties.get(i));
 			this.numberOfrunningParties++;
@@ -71,7 +68,7 @@ public class ElectionRound implements Menuable{
 		return true;
 	}
 
-	public boolean setBallots(List<Ballot> ballots) { //boolean since it says so in the task
+	public boolean setBallots(Vector<Ballot> ballots) { // boolean since it says so in the task
 		for (int i = 0; i < ballots.size(); i++) {
 			this.ballots.add(ballots.get(i));
 			this.numberOfBallots++;
@@ -79,38 +76,38 @@ public class ElectionRound implements Menuable{
 		return true;
 	}
 
-	public boolean setElectionMonth(int electionMonth) { //boolean since it says so in the task
+	public boolean setElectionMonth(int electionMonth) { // boolean since it says so in the task
 		if (this.electionMonth > 12 || electionMonth < 1) {
 			this.electionMonth = 1;
 			return false;
 		} else
 			this.electionMonth = electionMonth;
-			return true;
+		return true;
 	}
 
-	public boolean setElectionYear(int electionYear) { //boolean since it says so in the task
+	public boolean setElectionYear(int electionYear) { // boolean since it says so in the task
 		if (electionYear <= 0) {
 			this.electionYear = 2020;
 			return false;
 		} else
 			this.electionYear = electionYear;
-			return true;
+		return true;
 	}
 
 	public int getElectionYear() {
 		return this.electionYear;
 	}
-	
+
 	public boolean setHasHappened(boolean happened) {
-		this.hasHappened=happened;
+		this.hasHappened = happened;
 		return true;
 	}
-	
+
 	public boolean getHasHappened() {
 		return this.hasHappened;
 	}
 
-	public String toString() { 
+	public String toString() {
 		return "Election Round on " + electionMonth + "/" + electionYear;
 	}
 
@@ -118,20 +115,20 @@ public class ElectionRound implements Menuable{
 		return this.electionMonth == other.electionMonth && this.electionYear == other.electionYear;
 	}
 
-	public boolean setBallotsAndCitizens(List<Citizen> voters, List<Ballot> ballots) throws ageOutOfRange { //boolean since it says so in the task
+	public boolean setBallotsAndCitizens(Vector<Citizen> voters, Vector<Ballot> ballots) throws ageOutOfRange { // boolean since it says so in the task
 		for (int i = 0; i < voters.size(); i++) {
 			for (int j = 0; j < ballots.size(); j++) {
-					if (ballots.get(j).belongs(voters.get(i))) {
-						voters.get(i).setBallot(ballots.get(j));
-						break;
+				if (ballots.get(j).belongs(voters.get(i))) {
+					voters.get(i).setBallot(ballots.get(j));
+					break;
 				}
 			}
 		}
 		return true;
 	}
 
-	public boolean setBallotAndASingleCitizen(Scanner scan, List <Ballot> ballots) { //boolean since it says so in the task
-		Citizen temp=new Citizen(scan);
+	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) throws IDOutOfRange { // boolean since it says so in the task
+		Citizen temp = new Citizen(scan);
 		citizens.add(temp);
 		try {
 			for (int i = 0; i < ballots.size(); i++) {
@@ -142,12 +139,13 @@ public class ElectionRound implements Menuable{
 					break;
 				}
 			}
-		}catch (ageOutOfRange notBigEnough) {
+		} catch (ageOutOfRange notBigEnough) {
 			return false;
 		}
 		return true;
 	}
-	public boolean setBallotAndASingleCandidate(Candidate candidate, List <Ballot> ballots) throws ageOutOfRange {
+
+	public boolean setBallotAndASingleCandidate(Candidate candidate, Vector<Ballot> ballots) throws ageOutOfRange {
 		for (int i = 0; i < ballots.size(); i++) {
 			if (ballots.get(i).belongs(candidate)) {
 				candidate.setBallot(ballots.get(i));
@@ -158,7 +156,7 @@ public class ElectionRound implements Menuable{
 		}
 		return true;
 	}
-	
+
 	private double calculateTotalVotingPercent() {
 		if (numberOfvoters == 0) {
 			return 0;
@@ -173,20 +171,20 @@ public class ElectionRound implements Menuable{
 
 	private int calculateActualVoters() {
 		for (int i = 0; i < voters.size(); i++) {
-				if (voters.get(i).getIsVoting()) {
-					ActualNumberOfVoters++;
+			if (voters.get(i).getIsVoting()) {
+				ActualNumberOfVoters++;
 			}
 		}
 		return ActualNumberOfVoters;
 	}
-	
-	private boolean setNumberOfVotersPerParty() { //boolean since it says so in the task
+
+	private boolean setNumberOfVotersPerParty() { // boolean since it says so in the task
 		for (int i = 0; i < ballots.size(); i++) {
-				List <BallotsResults> temp = ballots.get(i).getResults();
-				for (int j = 0; j < temp.size(); j++) {
-					for (int k = 0; k < runningParties.size(); k++) {
-						if (temp.get(j).getParty().equals(runningParties.get(k))) {
-							runningParties.get(k).setNumberOfVoters(temp.get(j).getVotesNumber());
+			Vector<BallotsResults> temp = ballots.get(i).getResults();
+			for (int j = 0; j < temp.size(); j++) {
+				for (int k = 0; k < runningParties.size(); k++) {
+					if (temp.get(j).getParty().equals(runningParties.get(k))) {
+						runningParties.get(k).setNumberOfVoters(temp.get(j).getVotesNumber());
 					}
 				}
 			}
@@ -197,44 +195,44 @@ public class ElectionRound implements Menuable{
 	// from menu:
 
 	public void addABallot(Scanner scan) {
-			System.out.println("You have chose to add a ballot:");
-			System.out.println(
-					"Press 1 for Corona ballot.\nPress 2 for Military ballot." + "\nPress 3 for a regular ballot.");
-			int choise = scan.nextInt();
-			switch (choise) {
-			case 1:
-				ballots.add(new CoronaBallot(scan, runningParties));
-				System.out.println("Ballot was added successfuly");
-				break;
-			case 2:
-				ballots.add(new MilitaryBallot(scan, runningParties));
-				System.out.println("Ballot was added successfuly");
-				break;
-			case 3:
-				ballots.add(new Ballot(scan, runningParties));
-				System.out.println("Ballot was added successfuly");
-				break;
-			default:
-				System.out.println("You have pressed a wrong key");
-			}
-			numberOfBallots++;
+		System.out.println("You have chose to add a ballot:");
+		System.out.println(
+				"Press 1 for Corona ballot.\nPress 2 for Military ballot." + "\nPress 3 for a regular ballot.");
+		int choise = scan.nextInt();
+		switch (choise) {
+		case 1:
+			ballots.add(new CoronaBallot(scan, runningParties));
+			System.out.println("Ballot was added successfuly");
+			break;
+		case 2:
+			ballots.add(new MilitaryBallot(scan, runningParties));
+			System.out.println("Ballot was added successfuly");
+			break;
+		case 3:
+			ballots.add(new Ballot(scan, runningParties));
+			System.out.println("Ballot was added successfuly");
+			break;
+		default:
+			System.out.println("You have pressed a wrong key");
+		}
+		numberOfBallots++;
 	}
 
-	public void addACitizen(Scanner scan) {
-			System.out.println("You have chose to add a citizen, please enter details:");
-			setBallotAndASingleCitizen(scan, this.ballots);
-			numberOfCitizens++;
-			System.out.println("Citizen was added successfuly");
+	public void addACitizen(Scanner scan) throws IDOutOfRange {
+		System.out.println("You have chose to add a citizen, please enter details:");
+		setBallotAndASingleCitizen(scan, this.ballots);
+		numberOfCitizens++;
+		System.out.println("Citizen was added successfuly");
 	}
 
 	public void addAParty(Scanner scan) {
-			System.out.println("You have chose to add a party, please enter details:");
-			runningParties.add(new Party(scan));
-			numberOfrunningParties++;
-			System.out.println("Party was added successfuly");
+		System.out.println("You have chose to add a party, please enter details:");
+		runningParties.add(new Party(scan));
+		numberOfrunningParties++;
+		System.out.println("Party was added successfuly");
 	}
 
-	public void addACandidateToParty(Scanner scan) throws ageOutOfRange {
+	public void addACandidateToParty(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("You have chose to add a candidate to a party: please press the number of wanted party.");
 		for (int i = 0; i < runningParties.size(); i++) {
 			System.out.println((i + 1) + "--> " + runningParties.get(i).getName());
@@ -252,7 +250,7 @@ public class ElectionRound implements Menuable{
 	public void showAllBallots() {
 		System.out.println("Here are all the ballots in this election:\n");
 		for (int i = 0; i < numberOfBallots; i++) {
-				System.out.println(ballots.get(i));
+			System.out.println(ballots.get(i));
 		}
 		System.out.println();
 	}
@@ -260,15 +258,15 @@ public class ElectionRound implements Menuable{
 	public void showAllCitizens() {
 		System.out.println("Here are all the citizens in this election:\n");
 		for (int i = 0; i < numberOfCitizens; i++) {
-				System.out.println(citizens.get(i));
+			System.out.println(citizens.getSet().get(i));
 		}
 		System.out.println();
 	}
 
 	public void showAllParties() {
 		System.out.println("Here are all the parties in this election:\n");
-		for (int i = 0; i <numberOfrunningParties; i++) {
-				System.out.println(runningParties.get(i));
+		for (int i = 0; i < numberOfrunningParties; i++) {
+			System.out.println(runningParties.get(i));
 		}
 		System.out.println();
 	}
@@ -276,23 +274,24 @@ public class ElectionRound implements Menuable{
 	public void elections(Scanner scan) {
 		System.out.println("You have chose to start the voting");
 		for (int i = 0; i < numberOfvoters; i++) {
-				voters.get(i).vote(scan, runningParties);
+			voters.get(i).vote(scan, runningParties);
 		}
 		System.out.println("The voting is done\n");
 	}
 
 	public void ShowElectionResults() {
-		System.out.println(this.toString()+" is over.");
+		System.out.println(this.toString() + " is over.");
 		System.out.println("The number of voters is " + calculateActualVoters() + " out of " + this.numberOfvoters
 				+ " Potential voters. " + "The voting percent of the election round: " + calculateTotalVotingPercent()
 				+ "%\n");
 		for (int i = 0; i < numberOfBallots; i++) {
-				ballots.get(i).showResults();
+			ballots.get(i).showResults();
 		}
 		setNumberOfVotersPerParty();
 		System.out.println("The number of votes that each party got is: ");
 		for (int i = 0; i < numberOfrunningParties; i++) {
-				System.out.println("The party: "+runningParties.get(i).getName()+ " got "+ runningParties.get(i).getNumberOfVoters()+" votes.");
+			System.out.println("The party: " + runningParties.get(i).getName() + " got "
+					+ runningParties.get(i).getNumberOfVoters() + " votes.");
 		}
 		System.out.println();
 	}

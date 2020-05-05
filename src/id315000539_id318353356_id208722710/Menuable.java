@@ -4,12 +4,20 @@ import java.util.Scanner;
 
 public interface Menuable {
 	void addABallot(Scanner scan);
-	void addACitizen(Scanner scan);
+
+	void addACitizen(Scanner scan) throws IDOutOfRange;
+
 	void addAParty(Scanner scan);
-	void addACandidateToParty(Scanner scan) throws ageOutOfRange;
+
+	void addACandidateToParty(Scanner scan) throws ageOutOfRange, IDOutOfRange;
+
 	void showAllBallots();
+
 	void showAllCitizens();
+
 	void showAllParties();
+
 	void elections(Scanner scan);
+
 	void ShowElectionResults();
 }

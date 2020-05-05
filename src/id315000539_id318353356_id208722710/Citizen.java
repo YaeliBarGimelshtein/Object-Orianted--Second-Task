@@ -1,7 +1,7 @@
 package id315000539_id318353356_id208722710;
 
-import java.util.List;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Citizen {
 	protected String name;
@@ -11,8 +11,9 @@ public class Citizen {
 	protected Ballot ballot;
 	protected int age;
 	protected boolean isVoting;
+	protected boolean idCorrect;
 
-	public Citizen(String name, int ID, int year, boolean isQuarantine)  {
+	public Citizen(String name, int ID, int year, boolean isQuarantine) throws IDOutOfRange  {
 		this.name = name;
 		setID(ID);
 		setYear(year);
@@ -20,22 +21,29 @@ public class Citizen {
 		setAge();
 	}
 
-	public Citizen(Scanner scan) {
-		System.out.println("please enter the citizen's name:");
-		scan.nextLine();
-		this.name = scan.nextLine();
-		System.out.println("please enter the citizen's ID:");
-		this.ID = scan.nextInt();
-		System.out.println("please enter the citizen's birth year:");
-		scan.nextLine();
-		this.birthYear = scan.nextInt();
-		System.out.println("please enter if the citizen is in quarantine (true/false):");
-		scan.nextLine();
-		this.isQuarantine = scan.nextBoolean();
-		setAge();
-	}
+	public Citizen(Scanner scan) throws IDOutOfRange {
+		try {
+			System.out.println("please enter the citizen's name:");
+			scan.nextLine();
+			this.name = scan.nextLine();
+			System.out.println("please enter the citizen's ID:");
+			setID(scan.nextInt());
+			System.out.println("please enter the citizen's birth year:");
+			scan.nextLine();
+			this.birthYear = scan.nextInt();
+			System.out.println("please enter if the citizen is in quarantine (true/false):");
+			scan.nextLine();
+			this.isQuarantine = scan.nextBoolean();
+			setAge();
+			}catch(IDOutOfRange wrongID){
+				do {
+					System.out.println("enter 9 digit ID");
+					idCorrect=setID(scan.nextInt());
+				} while (!idCorrect);
+			}
+		}
 
-	public Citizen(Citizen citizen) throws ageOutOfRange {
+	public Citizen(Citizen citizen) throws ageOutOfRange, IDOutOfRange {
 		this.name = citizen.name;
 		setID(citizen.ID);
 		setYear(citizen.getYear());
@@ -45,8 +53,9 @@ public class Citizen {
 			throw new ageOutOfRange("Not legal to vote yet");
 		}
 	}
+		
 
-	private boolean setAge() { //boolean since it says so in the task
+	private boolean setAge() { // boolean since it says so in the task
 		this.age = ElectionRound.ELECTION_YEAR - this.birthYear;
 		return true;
 	}
@@ -59,13 +68,13 @@ public class Citizen {
 		return this.ballot;
 	}
 
-	public boolean setBallot(Ballot ballot) throws ageOutOfRange { //boolean since it says so in the task
+	public boolean setBallot(Ballot ballot) throws ageOutOfRange { // boolean since it says so un the taks
 		if (this.age <= 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
-		}else {
-		this.ballot = ballot;
-		ballot.addVoter(this); // (pointing at each other)
-		return true;
+		} else {
+			this.ballot = ballot;
+			ballot.addVoter(this); // (pointing at each other)
+			return true;
 		}
 	}
 
@@ -81,7 +90,7 @@ public class Citizen {
 		return this.isQuarantine;
 	}
 
-	private boolean setYear(int year) { //boolean since it says so in the task
+	private boolean setYear(int year) { // boolean since it says so in the task
 		if (year > 0 && year < 2021) {
 			this.birthYear = year;
 			return true;
@@ -91,13 +100,12 @@ public class Citizen {
 		}
 	}
 
-	private boolean setID(int iD) { //boolean since it says so in the task
-		if (iD > 0) {
-			this.ID = iD;
-			return true;
-		} else {
-			this.ID = 0;
-			return false;
+	private boolean setID(int iD)throws IDOutOfRange { // boolean since it says so in the task
+		if(this.ID<100000000||this.ID>999999999) {
+			throw new IDOutOfRange("Illegal ID");
+		}else {
+		this.ID=iD;
+		return true;
 		}
 	}
 
@@ -120,7 +128,7 @@ public class Citizen {
 		this.ballot.vote(selectedParty, this);
 	}
 
-	public void vote(Scanner scan, List <Party> parties) {
+	public void vote(Scanner scan, Vector<Party> parties) {
 		System.out.println("Citizen: " + this.name + " ID: " + this.ID + " do you want to vote? Y for yes/N for no: ");
 		if (scan.next().toUpperCase().charAt(0) == 'Y') {
 			if (this.isQuarantine == true) {
@@ -130,13 +138,13 @@ public class Citizen {
 					return;
 				}
 			}
-			System.out.println("You are voting in : "+ this.ballot);
+			System.out.println("You are voting in : " + this.ballot);
 			System.out.println("choose a party from the list: ");
 			for (int i = 0; i < parties.size(); i++) {
-					System.out.println((i + 1) + "--> " + parties.get(i).getName());
+				System.out.println((i + 1) + "--> " + parties.get(i).getName());
 			}
 			int choise = scan.nextInt();
-			this.vote(parties.get(choise-1));
+			this.vote(parties.get(choise - 1));
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
@@ -147,7 +155,7 @@ public class Citizen {
 		String str = name + " is " + age + " ,ID=" + ID + ", born in " + birthYear + ", is in Quarantine="
 				+ isQuarantine;
 		if (ballot != null) {
-			str = str + ", votes at ballot number " + ballot.getId()+ ". ";
+			str = str + ", votes at ballot number " + ballot.getId() + ". ";
 		}
 		return str;
 	}
