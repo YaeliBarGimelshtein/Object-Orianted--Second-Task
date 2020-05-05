@@ -62,7 +62,7 @@ public class Party {
 		placeInParty++;
 	}
 
-	public Citizen addCandidate(Scanner scan) throws ageOutOfRange {
+	public Citizen addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("please enter candidate details: ");
 		try {
 			Candidate temp = new Candidate(scan, this);

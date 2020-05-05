@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Main {
-	public static void main(String[] args) throws ageOutOfRange {
+	public static void main(String[] args) throws ageOutOfRange, IDOutOfRange {
 		Scanner scan = new Scanner(System.in);
 		int choise;
 
@@ -19,7 +19,7 @@ public class Main {
 
 		firstRound.setRunningParties(runningParties); // election has parties
 
-		Vector<Citizen> citizens = new Vector<>();
+		Set<Citizen> citizens = new Set<>();
 		citizens.add(new Citizen("Yakir", 123456789, 1997, false));
 		citizens.add(new Citizen("Ran", 303939155, 1996, false));
 		citizens.add(new Citizen("Yaeli", 208722719, 1997, false));
@@ -35,10 +35,10 @@ public class Main {
 		firstRound.setCitizens(citizens); // election has citizens
 		Vector<Citizen> voters = new Vector<>();
 		boolean isOldEnough;
-		for (int i = 0; i < citizens.size(); i++) {
-			isOldEnough = firstRound.setVoter(citizens.get(i));
+		for (int i = 0; i < citizens.getSet().size(); i++) {
+			isOldEnough = firstRound.setVoter(citizens.getSet().get(i));
 			if (isOldEnough) {
-				voters.add(citizens.get(i)); // election has voters
+				voters.add(citizens.getSet().get(i)); // election has voters
 			}
 		}
 
@@ -47,10 +47,7 @@ public class Main {
 		ballots.add(new MilitaryBallot("Beer Sheva", runningParties));
 		ballots.add(new Ballot("Tel aviv", runningParties));
 
-		firstRound.setBallotsAndCitizens(voters, ballots); // citizens get
-															// ballots &&
-															// ballots get
-															// citizens
+		firstRound.setBallotsAndCitizens(voters, ballots); // citizens get ballots && ballots get citizens
 		firstRound.setVoters(voters);
 		firstRound.setBallots(ballots); // election has ballots
 
