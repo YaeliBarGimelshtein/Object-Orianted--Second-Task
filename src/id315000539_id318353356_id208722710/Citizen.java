@@ -13,9 +13,9 @@ public class Citizen {
 	protected boolean isVoting;
 	protected boolean idCorrect;
 
-	public Citizen(String name, int ID, int year, boolean isQuarantine) throws IDOutOfRange  {
+	public Citizen(String name, int ID, int year, boolean isQuarantine)  {
 		this.name = name;
-		setID(ID);
+		this.ID=ID;
 		setYear(year);
 		this.isQuarantine = isQuarantine;
 		setAge();
@@ -26,26 +26,29 @@ public class Citizen {
 			System.out.println("please enter the citizen's name:");
 			scan.nextLine();
 			this.name = scan.nextLine();
-			System.out.println("please enter the citizen's ID:");
-			setID(scan.nextInt());
 			System.out.println("please enter the citizen's birth year:");
-			scan.nextLine();
 			this.birthYear = scan.nextInt();
 			System.out.println("please enter if the citizen is in quarantine (true/false):");
 			scan.nextLine();
 			this.isQuarantine = scan.nextBoolean();
 			setAge();
+			System.out.println("please enter the citizen's ID:");
+			setID(scan.nextInt());
 			}catch(IDOutOfRange wrongID){
+				int tempId;
 				do {
-					System.out.println("enter 9 digit ID");
-					idCorrect=setID(scan.nextInt());
+					System.out.println("Inccorect id. please enter 9 digit ID");
+					tempId= scan.nextInt();
+					idCorrect=checkId(tempId);
 				} while (!idCorrect);
+				this.ID=tempId;
 			}
 		}
 
-	public Citizen(Citizen citizen) throws ageOutOfRange, IDOutOfRange {
+
+	public Citizen(Citizen citizen) throws ageOutOfRange {
 		this.name = citizen.name;
-		setID(citizen.ID);
+		this.ID=citizen.ID;	
 		setYear(citizen.getYear());
 		this.isQuarantine = citizen.isQuarantine;
 		setAge();
@@ -101,12 +104,18 @@ public class Citizen {
 	}
 
 	private boolean setID(int iD)throws IDOutOfRange { // boolean since it says so in the task
-		if(this.ID<100000000||this.ID>999999999) {
+		if(iD<100000000||iD>999999999) {
 			throw new IDOutOfRange("Illegal ID");
 		}else {
 		this.ID=iD;
 		return true;
 		}
+	}
+	private boolean checkId(int idTemp) {
+		if(idTemp<100000000||idTemp>999999999) {
+			return false;
+		}
+		return true;
 	}
 
 	public String getName() {
@@ -117,15 +126,17 @@ public class Citizen {
 		return this.isVoting;
 	}
 
-	public boolean equals(Citizen citizen) {
-		if (this.ID == citizen.ID) {
-			return true;
-		}
-		return false;
-	}
-
 	public void vote(Party selectedParty) {
 		this.ballot.vote(selectedParty, this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Citizen other = (Citizen) obj;
+		if (this.ID != other.ID) {
+			return false;
+		}
+		return true;
 	}
 
 	public void vote(Scanner scan, Vector<Party> parties) {

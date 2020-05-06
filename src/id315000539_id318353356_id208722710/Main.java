@@ -35,10 +35,10 @@ public class Main {
 		firstRound.setCitizens(citizens); // election has citizens
 		Vector<Citizen> voters = new Vector<>();
 		boolean isOldEnough;
-		for (int i = 0; i < citizens.getSet().size(); i++) {
-			isOldEnough = firstRound.setVoter(citizens.getSet().get(i));
+		for (int i = 0; i < citizens.getSetLenght(); i++) {
+			isOldEnough = firstRound.setVoter(citizens.getObjectAtIndex(i));
 			if (isOldEnough) {
-				voters.add(citizens.getSet().get(i)); // election has voters
+				voters.add(citizens.getObjectAtIndex(i)); // election has voters
 			}
 		}
 

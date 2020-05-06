@@ -11,15 +11,19 @@ public class Set <T> {
 
 	public boolean add(T object) {
 		for (int i = 0; i < set.size(); i++) {
-			if (set.get(i).equals(object)) {
+			if (object.equals(set.get(i))) {
 				return false;
 			}
 		}
 		set.add(object);
 		return true;
 	}
-
-	public Vector<T> getSet() {
-		return set;
+	
+	public int getSetLenght() {
+		return this.set.size();
+	}
+	
+	public T getObjectAtIndex(int index){
+		return this.set.get(index);
 	}
 }
