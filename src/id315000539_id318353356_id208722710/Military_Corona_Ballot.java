@@ -17,7 +17,7 @@ public class Military_Corona_Ballot extends Ballot {
 	}
 
 	public boolean belongs(Citizen voter) {
-		if (voter.getIsQuarantine() == true && voter.getAge() < 22 && voter.getAge() > 17 && super.belongs(voter)) {
+		if ((voter instanceof SickCitizen == true||voter instanceof SickSoldier == true)&& voter.getAge() < 22 && voter.getAge() > 17 && super.belongs(voter)) {
 			return true;
 		}
 		return false;

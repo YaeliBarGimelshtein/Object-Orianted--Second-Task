@@ -5,7 +5,7 @@ import java.util.Scanner;
 public interface Menuable {
 	void addABallot(Scanner scan);
 
-	void addACitizen(Scanner scan) throws IDOutOfRange;
+	void addACitizen(Scanner scan) throws IDOutOfRange, ageOutOfRange;
 
 	void addAParty(Scanner scan);
 

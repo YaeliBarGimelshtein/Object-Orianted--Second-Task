@@ -5,12 +5,13 @@ import java.util.Scanner;
 public class SickCitizen extends Citizen {
 	private int numOfSickDays;
 
-	public SickCitizen(String name, int ID, int year, boolean isQuarantine,int days) throws IDOutOfRange {
-		super(name, ID, year, isQuarantine);
+
+	public SickCitizen(String name, int ID, int year,int days) throws IDOutOfRange {
+		super(name, ID, year);
 		setNumOfSickDays(days);
 	}
 	
-	public SickCitizen(Citizen citizen,int days)throws ageOutOfRange {
+	public SickCitizen(Citizen citizen,int days) {
 			super(citizen);
 			setNumOfSickDays(days);
 		}
