@@ -42,13 +42,19 @@ public class ElectionRound implements Menuable {
 
 	public boolean setVoter(Citizen citizen) throws IDOutOfRange {
 		try {
-			Citizen temp = new Citizen(citizen);
-			this.voters.add(temp);
+			checkVotingException(citizen);
+			this.voters.add(citizen);
 			this.numberOfvoters++;
 		} catch (ageOutOfRange notBigEnough) {
 			return false;
 		}
 		return true;
+	}
+	
+	public <T extends Citizen> void checkVotingException (T object) throws ageOutOfRange {
+		if (object.getAge() < 18) {
+			throw new ageOutOfRange("Not legal to vote yet");
+		}
 	}
 
 	public Vector<Citizen> getVoters() {
@@ -127,7 +133,7 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) throws IDOutOfRange { // boolean since it says so in the task																								
+	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots)throws ageOutOfRange, IDOutOfRange { // boolean since it says so in the task																								
 		boolean notSamePerson;
 		Citizen temp = new Citizen(scan);
 		notSamePerson = citizens.add(temp);
@@ -136,6 +142,7 @@ public class ElectionRound implements Menuable {
 		} else {
 			System.out.print("Citizen was added successfuly");
 			try {
+				checkVotingException(temp);
 				for (int i = 0; i < ballots.size(); i++) {
 					if (ballots.get(i).belongs(temp)) {
 						temp.setBallot(ballots.get(i));
@@ -224,7 +231,7 @@ public class ElectionRound implements Menuable {
 		numberOfBallots++;
 	}
 
-	public void addACitizen(Scanner scan) throws IDOutOfRange {
+	public void addACitizen(Scanner scan) throws IDOutOfRange, ageOutOfRange {
 		System.out.println("You have chose to add a citizen, please enter details:");
 		boolean isAbleToVote;
 		isAbleToVote=setBallotAndASingleCitizen(scan, this.ballots);

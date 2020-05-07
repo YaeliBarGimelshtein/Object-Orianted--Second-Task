@@ -20,17 +20,17 @@ public class Main {
 		firstRound.setRunningParties(runningParties); // election has parties
 
 		Set<Citizen> citizens = new Set<>();
-		citizens.add(new Citizen("Yakir", 123456789, 1997, false));
-		citizens.add(new Citizen("Ran", 303939155, 1996, false));
-		citizens.add(new Citizen("Yaeli", 208722719, 1997, false));
-		citizens.add(new Citizen("Shir", 246123784, 1995, true));
-		citizens.add(new Citizen("Or", 123567488, 2001, false));
-		citizens.add(new Candidate("Benjamin Netanyahu", 251637285, 1949, true, runningParties.get(1)));
-		citizens.add(new Candidate("Beny Gantz", 278492871, 1959, false, runningParties.get(2)));
-		citizens.add(new Candidate("Amir Peretz", 362719835, 1958, true, runningParties.get(0)));
-		citizens.add(new Candidate("Miri Regev", 274958637, 1959, false, runningParties.get(1)));
-		citizens.add(new Candidate("Yair Lapid", 198365039, 1960, true, runningParties.get(2)));
-		citizens.add(new Candidate("Nitzan Horovitz", 284019372, 1962, false, runningParties.get(0)));
+		citizens.add(new Citizen("Yakir", 123456789, 1997));
+		citizens.add(new Citizen("Ran", 303939155, 1996));
+		citizens.add(new SickCitizen("Yaeli", 208722719, 1997,8));
+		citizens.add(new Soldier("Shir", 246123784, 2002,true));
+		citizens.add(new SickSoldier("Or", 123567488, 2001,false,20));
+		citizens.add(new Candidate("Benjamin Netanyahu", 251637285, 1949, runningParties.get(1)));
+		citizens.add(new Candidate("Beny Gantz", 278492871, 1959,  runningParties.get(2)));
+		citizens.add(new Candidate("Amir Peretz", 362719835, 1958, runningParties.get(0)));
+		citizens.add(new Candidate("Miri Regev", 274958637, 1959, runningParties.get(1)));
+		citizens.add(new Candidate("Yair Lapid", 198365039, 1960, runningParties.get(2)));
+		citizens.add(new Candidate("Nitzan Horovitz", 284019372, 1962, runningParties.get(0)));
 
 		firstRound.setCitizens(citizens); // election has citizens
 		Vector<Citizen> voters = new Vector<>();
