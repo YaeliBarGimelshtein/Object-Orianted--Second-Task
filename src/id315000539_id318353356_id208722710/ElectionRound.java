@@ -33,8 +33,8 @@ public class ElectionRound implements Menuable {
 	}
 
 	public boolean setCitizens(Set<Citizen> citizens) { // boolean since it says so in the task
-		for (int i = 0; i < citizens.getSet().size(); i++) {
-			this.citizens.add(citizens.getSet().get(i));
+		for (int i = 0; i < citizens.getSetLenght(); i++) {
+			this.citizens.add(citizens.getObjectAtIndex(i));
 			numberOfCitizens++;
 		}
 		return true;
@@ -127,20 +127,26 @@ public class ElectionRound implements Menuable {
 		return true;
 	}
 
-	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) throws IDOutOfRange { // boolean since it says so in the task
+	public boolean setBallotAndASingleCitizen(Scanner scan, Vector<Ballot> ballots) throws IDOutOfRange { // boolean since it says so in the task																								
+		boolean notSamePerson;
 		Citizen temp = new Citizen(scan);
-		citizens.add(temp);
-		try {
-			for (int i = 0; i < ballots.size(); i++) {
-				if (ballots.get(i).belongs(temp)) {
-					temp.setBallot(ballots.get(i));
-					voters.add(temp);
-					numberOfvoters++;
-					break;
+		notSamePerson = citizens.add(temp);
+		if (!notSamePerson) {
+			System.out.println("Not able to add since this person is already registered");
+		} else {
+			System.out.print("Citizen was added successfuly");
+			try {
+				for (int i = 0; i < ballots.size(); i++) {
+					if (ballots.get(i).belongs(temp)) {
+						temp.setBallot(ballots.get(i));
+						voters.add(temp);
+						numberOfvoters++;
+						break;
+					}
 				}
+			} catch (ageOutOfRange notBigEnough) {
+				return false;
 			}
-		} catch (ageOutOfRange notBigEnough) {
-			return false;
 		}
 		return true;
 	}
@@ -220,9 +226,14 @@ public class ElectionRound implements Menuable {
 
 	public void addACitizen(Scanner scan) throws IDOutOfRange {
 		System.out.println("You have chose to add a citizen, please enter details:");
-		setBallotAndASingleCitizen(scan, this.ballots);
+		boolean isAbleToVote;
+		isAbleToVote=setBallotAndASingleCitizen(scan, this.ballots);
+		if(isAbleToVote) {
+			System.out.println(" and was matched with a ballot");
+		}else {
+			System.out.println(" and was not matched with a ballot since he is not old enough");
+		}
 		numberOfCitizens++;
-		System.out.println("Citizen was added successfuly");
 	}
 
 	public void addAParty(Scanner scan) {
@@ -258,7 +269,7 @@ public class ElectionRound implements Menuable {
 	public void showAllCitizens() {
 		System.out.println("Here are all the citizens in this election:\n");
 		for (int i = 0; i < numberOfCitizens; i++) {
-			System.out.println(citizens.getSet().get(i));
+			System.out.println(citizens.getObjectAtIndex(i));
 		}
 		System.out.println();
 	}

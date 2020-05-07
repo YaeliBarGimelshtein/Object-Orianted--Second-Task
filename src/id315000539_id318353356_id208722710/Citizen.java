@@ -104,7 +104,7 @@ public class Citizen {
 	}
 
 	private boolean setID(int iD)throws IDOutOfRange { // boolean since it says so in the task
-		if(this.ID<100000000||this.ID>999999999) {
+		if(iD<100000000||iD>999999999) {
 			throw new IDOutOfRange("Illegal ID");
 		}else {
 		this.ID=iD;
@@ -126,15 +126,17 @@ public class Citizen {
 		return this.isVoting;
 	}
 
-	public boolean equals(Citizen citizen) {
-		if (this.ID == citizen.ID) {
-			return true;
-		}
-		return false;
-	}
-
 	public void vote(Party selectedParty) {
 		this.ballot.vote(selectedParty, this);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Citizen other = (Citizen) obj;
+		if (this.ID != other.ID) {
+			return false;
+		}
+		return true;
 	}
 
 	public void vote(Scanner scan, Vector<Party> parties) {
