@@ -6,8 +6,8 @@ public class Candidate extends Citizen {
 	private Party affiliationToParty;
 	private int placeInParty;
 
-	public Candidate(String name, int ID, int year, boolean isQuarantine, Party party) throws ageOutOfRange, IDOutOfRange {
-		super(name, ID, year, isQuarantine);
+	public Candidate(String name, int ID, int year, Party party) throws ageOutOfRange, IDOutOfRange {
+		super(name, ID, year);
 		this.affiliationToParty = party;
 		if (this.age < 18) {
 			throw new ageOutOfRange("Not legal to be a candidate yet");

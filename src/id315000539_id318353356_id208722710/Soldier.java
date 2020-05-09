@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class Soldier extends Citizen {
 	private boolean carryWeapon;
 
-	public Soldier(Citizen citizen,boolean weapon) throws ageOutOfRange {
+	public Soldier(Citizen citizen,boolean weapon) {
 		super(citizen);
 		this.carryWeapon=weapon;
 	}
 
-	public Soldier(String name, int ID, int year, boolean isQuarantine,boolean weapon) throws IDOutOfRange  {
-		super(name,ID,year,isQuarantine);
+	public Soldier(String name, int ID, int year,boolean weapon) throws IDOutOfRange  {
+		super(name,ID,year);
 		this.carryWeapon=weapon;
 	}
 	

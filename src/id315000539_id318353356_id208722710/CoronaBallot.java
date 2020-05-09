@@ -17,7 +17,7 @@ public class CoronaBallot extends Ballot {
 	}
 
 	public boolean belongs(Citizen voter) {
-		if (voter.getIsQuarantine() == true && super.belongs(voter)) {
+		if ((voter instanceof SickCitizen == true||voter instanceof SickSoldier == true) && super.belongs(voter)) {
 			return true;
 		}
 		return false;

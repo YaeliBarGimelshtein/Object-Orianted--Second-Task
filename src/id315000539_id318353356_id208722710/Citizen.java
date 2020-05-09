@@ -7,17 +7,15 @@ public class Citizen {
 	protected String name;
 	protected int ID;
 	protected int birthYear;
-	protected boolean isQuarantine;
 	protected Ballot ballot;
 	protected int age;
 	protected boolean isVoting;
 	protected boolean idCorrect;
 
-	public Citizen(String name, int ID, int year, boolean isQuarantine)  {
+	public Citizen(String name, int ID, int year)  {
 		this.name = name;
 		this.ID=ID;
 		setYear(year);
-		this.isQuarantine = isQuarantine;
 		setAge();
 	}
 
@@ -28,9 +26,6 @@ public class Citizen {
 			this.name = scan.nextLine();
 			System.out.println("please enter the citizen's birth year:");
 			this.birthYear = scan.nextInt();
-			System.out.println("please enter if the citizen is in quarantine (true/false):");
-			scan.nextLine();
-			this.isQuarantine = scan.nextBoolean();
 			setAge();
 			System.out.println("please enter the citizen's ID:");
 			setID(scan.nextInt());
@@ -46,15 +41,11 @@ public class Citizen {
 		}
 
 
-	public Citizen(Citizen citizen) throws ageOutOfRange {
+	public Citizen(Citizen citizen) {
 		this.name = citizen.name;
 		this.ID=citizen.ID;	
 		setYear(citizen.getYear());
-		this.isQuarantine = citizen.isQuarantine;
 		setAge();
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		}
 	}
 		
 
@@ -89,9 +80,6 @@ public class Citizen {
 		return this.birthYear;
 	}
 
-	public boolean getIsQuarantine() {
-		return this.isQuarantine;
-	}
 
 	private boolean setYear(int year) { // boolean since it says so in the task
 		if (year > 0 && year < 2021) {
@@ -142,7 +130,7 @@ public class Citizen {
 	public void vote(Scanner scan, Vector<Party> parties) {
 		System.out.println("Citizen: " + this.name + " ID: " + this.ID + " do you want to vote? Y for yes/N for no: ");
 		if (scan.next().toUpperCase().charAt(0) == 'Y') {
-			if (this.isQuarantine == true) {
+			if (this instanceof SickCitizen == true||this instanceof SickSoldier == true) {
 				System.out.println("Do you have a protective suit? Y for yes/N for no: ");
 				if (scan.next().toUpperCase().charAt(0) == 'N') {
 					System.out.println("We are very sorry, you can't vote");
@@ -163,8 +151,7 @@ public class Citizen {
 	}
 
 	public String toString() {
-		String str = name + " is " + age + " ,ID=" + ID + ", born in " + birthYear + ", is in Quarantine="
-				+ isQuarantine;
+		String str = name + " is " + age + " ,ID=" + ID + ", born in " + birthYear ;
 		if (ballot != null) {
 			str = str + ", votes at ballot number " + ballot.getId() + ". ";
 		}
