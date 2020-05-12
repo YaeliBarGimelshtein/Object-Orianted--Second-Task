@@ -45,8 +45,7 @@ public class Party {
 		return this.name;
 	}
 
-	public boolean setNumberOfVoters(int number) { // boolean since it says so
-													// in the task
+	public boolean setNumberOfVoters(int number) { // boolean since it says so in the task
 		this.numberOfVotes = number + this.numberOfVotes;
 		return true;
 	}

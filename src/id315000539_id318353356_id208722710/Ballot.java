@@ -59,14 +59,6 @@ public class Ballot<T extends Citizen> {
 	public void addVoter(T voter) {
 		votersList.add(voter); // (pointing at each other)
 		potentialVoters++;
-
-	}
-
-	public boolean belongs(T voter) {
-		if (voter.getAge() >= 18) {
-			return true;
-		}
-		return false;
 	}
 
 	public boolean vote(Party selectedParty, T voter) {
@@ -107,5 +99,4 @@ public class Ballot<T extends Citizen> {
 	public String toString() {
 		return "Ballot number " + this.id + " located in " + this.address;
 	}
-
 }
