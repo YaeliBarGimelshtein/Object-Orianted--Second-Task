@@ -16,15 +16,15 @@ public class Soldier extends Citizen {
 	public Soldier(Scanner scan) throws IDOutOfRange {
 		super(scan);
 		try {
-			checkAge();
 			System.out.println("please let us know if you carry a weapon(true/false):");
 			this.carryWeapon = scan.nextBoolean();
+			checkAge();
 		} catch (ageOutOfRange notBigEnough) {
 			int year = 0;
 			do {
-				System.out.println("We are sorry, the age of a Soldier is over 18, please re-enter year");
+				System.out.println("We are sorry, the age of a Soldier is over 21 or less 18, please re-enter year");
 				year = scan.nextInt();
-			} while (year >= 2002);
+			} while (year <= 1999 && year>=2002);
 			this.birthYear = year;
 			setAge();
 		}

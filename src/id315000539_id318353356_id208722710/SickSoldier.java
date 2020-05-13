@@ -17,10 +17,11 @@ public class SickSoldier extends Soldier implements Sickable{
 		super(scan);
 		System.out.println("please let us know how many days you are sick:");
 		numOfSickDays=scan.nextInt();
+		System.out.println("feel better!");
 	}
 	
 	public String toString() {
-		String str= super.toString()+"he is also sick for "+numOfSickDays;
+		String str= super.toString()+". He is also sick for "+numOfSickDays;
 		if (ballot != null) {
 			str = str + ", votes at ballot number " + ballot.getId() + ". ";
 		}

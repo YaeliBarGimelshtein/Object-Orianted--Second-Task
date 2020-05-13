@@ -46,7 +46,7 @@ public class Candidate extends Citizen {
 	}
 
 	public String toString() {
-		String str= super.toString() + "He is also a Candidate, his party is " + affiliationToParty.getName() + ".";
+		String str= super.toString() + ". He is also a Candidate, his party is " + affiliationToParty.getName() + ".";
 		if (ballot != null) {
 			str = str + ", votes at ballot number " + ballot.getId() + ". ";
 		}

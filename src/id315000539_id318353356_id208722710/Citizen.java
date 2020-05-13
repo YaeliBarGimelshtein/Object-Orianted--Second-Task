@@ -148,9 +148,9 @@ public class Citizen {
 
 	public String toString() {
 		String str = name + " is " + age + " ,ID=" + ID + ", born in " + birthYear ;
-//		if (ballot != null) {
-//			str = str + ", votes at ballot number " + ballot.getId() + ". ";
-//		}
+		if (ballot != null) {
+			str = str + ", votes at ballot number " + ballot.getId() + ". ";
+		}
 		return str;
 	}
 }

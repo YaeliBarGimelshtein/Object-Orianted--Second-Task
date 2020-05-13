@@ -15,9 +15,9 @@ public class ElectionRound implements Menuable {
 	private Set <SickCitizen> sickCitizens;
 	
 	private Vector <Citizen> citizensVoters;
-	private Vector<Soldier> SoldiersVoters;
+	private Set<Soldier> SoldiersVoters;
 	private Vector<SickCitizen> SickCitizensVoters;
-	private Vector<SickSoldier> SickSoldiersVoters;
+	private Set<SickSoldier> SickSoldiersVoters;
 	
 	
 	private Vector<Party> runningParties;
@@ -36,9 +36,9 @@ public class ElectionRound implements Menuable {
 		setElectionYear(electionYear);
 		ELECTION_YEAR = electionYear;
 		citizens = new Set<>();
-		SoldiersVoters= new Vector<>();
+		SoldiersVoters= new Set<>();
 		SickCitizensVoters= new Vector<>();
-		SickSoldiersVoters= new Vector<>();
+		SickSoldiersVoters= new Set<>();
 		runningParties = new Vector<>();
 		sickCitizens=new Set<>();
 		citizensVoters=new Vector<>();
@@ -55,19 +55,15 @@ public class ElectionRound implements Menuable {
 	}
 	
 	public boolean setSoldiersVoters(Set<Soldier> Soldiers) { // boolean since it says so in the task
-		for (int i = 0; i < Soldiers.getSetLenght(); i++) {
-			this.SoldiersVoters.add(Soldiers.getObjectAtIndex(i));
-			numberOfvoters++;
-		}
+		this.SoldiersVoters=Soldiers;
+		this.numberOfvoters+=Soldiers.getSetLenght();
 		return true;
 	}
 	
 	
 	public boolean setSickSoldiersVoters(Set<SickSoldier> SickSoldiers) { // boolean since it says so in the task
-		for (int i = 0; i < SickSoldiers.getSetLenght(); i++) {
-			this.SickSoldiersVoters.add(SickSoldiers.getObjectAtIndex(i));
-			numberOfvoters++;
-		}
+		this.SickSoldiersVoters=SickSoldiers;
+		this.numberOfvoters+=SickSoldiers.getSetLenght();
 		return true;
 	}
 	
@@ -183,33 +179,25 @@ public class ElectionRound implements Menuable {
 			sickCitizenBallot.get(0).addVoter(SickCitizensVoters.get(i));
 		}
 		
-		for (int i = 0; i < SoldiersVoters.size(); i++) {
-			SoldiersVoters.get(i).setBallot(soldierBallot.get(0));
-			soldierBallot.get(0).addVoter(SoldiersVoters.get(i));
+		for (int i = 0; i < SoldiersVoters.getSetLenght(); i++) {
+			SoldiersVoters.getObjectAtIndex(i).setBallot(soldierBallot.get(0));
+			soldierBallot.get(0).addVoter(SoldiersVoters.getObjectAtIndex(i));
 		}
 		
-		for (int i = 0; i < SickSoldiersVoters.size(); i++) {
-			SickSoldiersVoters.get(i).setBallot(sickSoldierBallot.get(0));
-			sickSoldierBallot.get(0).addVoter(SickSoldiersVoters.get(i));
+		for (int i = 0; i < SickSoldiersVoters.getSetLenght(); i++) {
+			SickSoldiersVoters.getObjectAtIndex(i).setBallot(sickSoldierBallot.get(0));
+			sickSoldierBallot.get(0).addVoter(SickSoldiersVoters.getObjectAtIndex(i));
 		}
 		return true;
 	}
 
-	public boolean setBallotAndASingleCitizen(Scanner scan)throws ageOutOfRange, IDOutOfRange { // boolean since it says so in the task																								
-		boolean notSamePerson;
-		Citizen temp = new Citizen(scan);
-		notSamePerson = citizens.add(temp);
-		if (!notSamePerson) {
-			System.out.println("Not able to add since this person is already registered");
-		} else {
-			System.out.print("Citizen was added successfuly");
+	public<T extends Citizen> boolean setBallotAndASingleCitizen(T temp)throws ageOutOfRange { 																								
 			try {
 				checkVotingException(temp);
 				matchBallotAndCitizen(temp);
 			} catch (ageOutOfRange notBigEnough) {
 				return false;
 			}
-		}
 		return true;
 	}
 	
@@ -258,13 +246,13 @@ public class ElectionRound implements Menuable {
 				ActualNumberOfVoters++;
 			}
 		}
-		for (int i = 0; i < SoldiersVoters.size(); i++) {
-			if (SoldiersVoters.get(i).getIsVoting()) {
+		for (int i = 0; i < SoldiersVoters.getSetLenght(); i++) {
+			if (SoldiersVoters.getObjectAtIndex(i).getIsVoting()) {
 				ActualNumberOfVoters++;
 			}
 		}
-		for (int i = 0; i < SickSoldiersVoters.size(); i++) {
-			if (SickSoldiersVoters.get(i).getIsVoting()) {
+		for (int i = 0; i < SickSoldiersVoters.getSetLenght(); i++) {
+			if (SickSoldiersVoters.getObjectAtIndex(i).getIsVoting()) {
 				ActualNumberOfVoters++;
 			}
 		}
@@ -321,8 +309,8 @@ public class ElectionRound implements Menuable {
 	public void addABallot(Scanner scan) {
 		System.out.println("You have chose to add a ballot:");
 		System.out.println(
-				"Press 1 for Sick Citizen's ballot.\nPress 2 for Soldier's ballot." + "\nPress 3 for a Citizens and "
-						+ "candidates ballot.\nPress 4 for Sick Soldier's regular ballot.");
+				"Press 1 for Sick Citizen's ballot\nPress 2 for Soldier's ballot" + "\nPress 3 for a Citizens and "
+						+ "candidates ballot\nPress 4 for Sick Soldier's regular ballot");
 						
 		int choise = scan.nextInt();
 		switch (choise) {
@@ -347,10 +335,61 @@ public class ElectionRound implements Menuable {
 		}
 	}
 
-	public void addACitizen(Scanner scan) throws IDOutOfRange, ageOutOfRange {
-		System.out.println("You have chose to add a citizen, please enter details:");
-		boolean isAbleToVote;
-		isAbleToVote=setBallotAndASingleCitizen(scan);
+	public void addACitizen(Scanner scan) throws IDOutOfRange, ageOutOfRange { 
+		System.out.println("You have chose to add a citizen");
+		System.out.println("Press 1 for Sick Citizen\nPress 2 for Soldier" + "\nPress 3 for a Citizen "
+						+ "\nPress 4 for Sick Soldier");
+		int choise= scan.nextInt();
+		boolean notTheSamePerson;
+		boolean isAbleToVote=false;
+		switch (choise) {
+		case 1:
+			SickCitizen temp= new SickCitizen(scan);
+			notTheSamePerson= sickCitizens.add(temp);
+			if (!notTheSamePerson) {
+				System.out.println("Not able to add since this person is already registered");
+			} else {
+				System.out.print("Citizen was added successfuly");
+				isAbleToVote=setBallotAndASingleCitizen(temp);
+				if(isAbleToVote) {
+					SickCitizensVoters.add(temp);
+				}
+			}
+			break;
+		case 2:
+			Soldier temp2 = new Soldier(scan);
+			notTheSamePerson=SoldiersVoters.add(temp2);
+			if (!notTheSamePerson) {
+				System.out.println("Not able to add since this person is already registered");
+			} else {
+				System.out.print("Citizen was added successfuly");
+				isAbleToVote=setBallotAndASingleCitizen(temp2);
+			}
+			break;
+		case 3:
+			Citizen temp3 = new Citizen(scan);
+			notTheSamePerson= citizens.add(temp3);
+			if (!notTheSamePerson) {
+				System.out.println("Not able to add since this person is already registered");
+			} else {
+				System.out.print("Citizen was added successfuly");
+				isAbleToVote=setBallotAndASingleCitizen(temp3);
+				if(isAbleToVote) {
+					citizensVoters.add(temp3);
+				}
+			}
+			break;
+		case 4:
+			SickSoldier temp4= new SickSoldier(scan);
+			notTheSamePerson=SickSoldiersVoters.add(temp4);
+			if (!notTheSamePerson) {
+				System.out.println("Not able to add since this person is already registered");
+			} else {
+				System.out.print("Citizen was added successfuly");
+				isAbleToVote=setBallotAndASingleCitizen(temp4);
+			}
+			break;
+		}
 		if(isAbleToVote) {
 			System.out.println(" and was matched with a ballot");
 		}else {
@@ -411,11 +450,11 @@ public class ElectionRound implements Menuable {
 		for (int i = 0; i < sickCitizens.getSetLenght(); i++) {
 			System.out.println(sickCitizens.getObjectAtIndex(i));
 		}
-		for (int i = 0; i < SoldiersVoters.size(); i++) {
-			System.out.println(SoldiersVoters.get(i));
+		for (int i = 0; i < SoldiersVoters.getSetLenght(); i++) {
+			System.out.println(SoldiersVoters.getObjectAtIndex(i));
 		}
-		for (int i = 0; i < SickSoldiersVoters.size(); i++) {
-			System.out.println(SickSoldiersVoters.get(i));
+		for (int i = 0; i < SickSoldiersVoters.getSetLenght(); i++) {
+			System.out.println(SickSoldiersVoters.getObjectAtIndex(i));
 		}
 		System.out.println();
 	}
@@ -433,14 +472,14 @@ public class ElectionRound implements Menuable {
 		for (int i = 0; i < citizensVoters.size(); i++) {
 			citizensVoters.get(i).vote(scan, runningParties);
 		}
-		for (int i = 0; i < SoldiersVoters.size(); i++) {
-			SoldiersVoters.get(i).vote(scan, runningParties);
+		for (int i = 0; i < SoldiersVoters.getSetLenght(); i++) {
+			SoldiersVoters.getObjectAtIndex(i).vote(scan, runningParties);
 		}
 		for (int i = 0; i < SickCitizensVoters.size(); i++) {
 			SickCitizensVoters.get(i).vote(scan, runningParties);
 		}
-		for (int i = 0; i < SickSoldiersVoters.size(); i++) {
-			SickSoldiersVoters.get(i).vote(scan, runningParties);
+		for (int i = 0; i < SickSoldiersVoters.getSetLenght(); i++) {
+			SickSoldiersVoters.getObjectAtIndex(i).vote(scan, runningParties);
 		}
 		System.out.println("The voting is done\n");
 	}

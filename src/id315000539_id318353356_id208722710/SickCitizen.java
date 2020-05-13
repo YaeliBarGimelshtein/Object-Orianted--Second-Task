@@ -21,6 +21,7 @@ public class SickCitizen extends Citizen implements Sickable {
 		super(scan);
 		System.out.println("please let us know how many days you have been sick:");
 		this.numOfSickDays=scan.nextInt();
+		System.out.println("feel better!");
 	}
 
 	private void setNumOfSickDays(int days) {
@@ -37,7 +38,7 @@ public class SickCitizen extends Citizen implements Sickable {
 	}
 	
 	public String toString() {
-		String str= super.toString()+"he is also sick for "+this.numOfSickDays+" days";
+		String str= super.toString()+". He is also sick for "+this.numOfSickDays+" days";
 		if (ballot != null) {
 			str = str + ", votes at ballot number " + ballot.getId() + ". ";
 		}

@@ -5,7 +5,7 @@ import java.util.Vector;
 
 public class Main {
 	//problems:
-	//1. to string of citizen
+
 	//2. each object that is not citizen gets 2 ballots even though in citizen
 	//   it is private and not supose to go..
 	//3. not sure if to add an option for sick candidates
