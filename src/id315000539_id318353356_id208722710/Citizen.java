@@ -7,7 +7,7 @@ public class Citizen {
 	protected String name;
 	protected int ID;
 	protected int birthYear;
-	protected Ballot ballot;
+	private Ballot<Citizen> ballot;
 	protected int age;
 	protected boolean isVoting;
 	protected boolean idCorrect;
@@ -49,7 +49,7 @@ public class Citizen {
 	}
 		
 
-	private boolean setAge() { // boolean since it says so in the task
+	protected boolean setAge() { // boolean since it says so in the task
 		this.age = ElectionRound.ELECTION_YEAR - this.birthYear;
 		return true;
 	}
@@ -58,16 +58,17 @@ public class Citizen {
 		return this.age;
 	}
 
-	public Ballot getBallot() {
+	public Ballot<?> getBallot() {
 		return this.ballot;
 	}
 
-	public boolean setBallot(Ballot ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age <= 18) {
+	
+	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the
+		if (this.age < 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {
-			this.ballot = ballot;
-			ballot.addVoter(this); // (pointing at each other)
+			this.ballot = (Ballot<Citizen>) ballot;
+			//ballot.addVoter(this); // (pointing at each other)
 			return true;
 		}
 	}
@@ -114,9 +115,11 @@ public class Citizen {
 		return this.isVoting;
 	}
 
+	
 	public void vote(Party selectedParty) {
 		this.ballot.vote(selectedParty, this);
 	}
+	 
 
 	@Override
 	public boolean equals(Object obj) {
@@ -130,13 +133,6 @@ public class Citizen {
 	public void vote(Scanner scan, Vector<Party> parties) {
 		System.out.println("Citizen: " + this.name + " ID: " + this.ID + " do you want to vote? Y for yes/N for no: ");
 		if (scan.next().toUpperCase().charAt(0) == 'Y') {
-			if (this instanceof SickCitizen == true||this instanceof SickSoldier == true) {
-				System.out.println("Do you have a protective suit? Y for yes/N for no: ");
-				if (scan.next().toUpperCase().charAt(0) == 'N') {
-					System.out.println("We are very sorry, you can't vote");
-					return;
-				}
-			}
 			System.out.println("You are voting in : " + this.ballot);
 			System.out.println("choose a party from the list: ");
 			for (int i = 0; i < parties.size(); i++) {
