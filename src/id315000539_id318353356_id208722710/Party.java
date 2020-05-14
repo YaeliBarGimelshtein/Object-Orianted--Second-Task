@@ -7,7 +7,6 @@ public class Party {
 	public enum Faction {
 		Right, Left, Center;
 	}
-
 	private Faction side;
 	private String name;
 	private String date;
@@ -35,8 +34,7 @@ public class Party {
 		this.candidateList = new Vector<>();
 	}
 
-	private boolean setFaction(String faction) { // boolean since it says so in
-													// the task
+	private boolean setFaction(String faction) { // boolean since it says so in the task
 		this.side = Faction.valueOf(faction);
 		return true;
 	}
@@ -45,8 +43,7 @@ public class Party {
 		return this.name;
 	}
 
-	public boolean setNumberOfVoters(int number) { // boolean since it says so
-													// in the task
+	public boolean setNumberOfVoters(int number) { // boolean since it says so in the task
 		this.numberOfVotes = number + this.numberOfVotes;
 		return true;
 	}
@@ -55,14 +52,16 @@ public class Party {
 		return numberOfVotes;
 	}
 
-	public void addCandidate(Candidate candidate) {
+	public<T extends Candidate> void addCandidate(T candidate) {
 		candidateList.add(candidate);
 		candidate.setPlaceInParty(placeInParty); // (pointing at each other)
 		currentCandidates++;
 		placeInParty++;
 	}
+	
+	
 
-	public Citizen addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
+	public Candidate addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("please enter candidate details: ");
 		try {
 			Candidate temp = new Candidate(scan, this);
@@ -77,6 +76,24 @@ public class Party {
 			return null;
 		}
 	}
+	public SickCandidate addSickCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
+		System.out.println("please enter candidate details: ");
+		try {
+			SickCandidate temp = new SickCandidate(scan, this);
+			candidateList.add(temp);
+			temp.setPlaceInParty(placeInParty);
+			currentCandidates++;
+			placeInParty++;
+			System.out.println("the candidadate was added successfuly");
+			return temp;
+		} catch (ageOutOfRange notBigEnough) {
+			System.out.println("not possible to add, not big enough");
+			return null;
+		}
+	}
+	
+	
+	
 
 	public boolean equals(Party party) {
 		if (party != null) {

@@ -3,22 +3,27 @@ package id315000539_id318353356_id208722710;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class SickCitizen extends Citizen implements Sickable {
+public class SickCandidate extends Candidate implements Sickable {
 	private int numOfSickDays;
-	private Ballot<SickCitizen> ballot;
-
-	public SickCitizen(String name, int ID, int year,int days) throws IDOutOfRange {
-		super(name, ID, year);
+	private Ballot<SickCandidate> ballot;
+	
+	public SickCandidate(String name, int ID, int year, Party party,int days) throws ageOutOfRange, IDOutOfRange {
+		super(name, ID, year, party);
 		setNumOfSickDays(days);
 	}
-	
-	public SickCitizen(Scanner scan)throws IDOutOfRange {
-		super(scan);
+
+
+	public SickCandidate(Scanner scan, Party party) throws ageOutOfRange, IDOutOfRange {
+		super(scan, party);
 		System.out.println("please let us know how many days you have been sick:");
 		this.numOfSickDays=scan.nextInt();
 		System.out.println("feel better!");
 	}
 
+	public int getNumOfSickDays() {
+		return numOfSickDays;
+	}
+	
 	private void setNumOfSickDays(int days) {
 		if(days>=0) {
 			numOfSickDays=days;
@@ -28,8 +33,9 @@ public class SickCitizen extends Citizen implements Sickable {
 		}
 	}
 	
-	public int getNumOfSickDays() {
-		return this.numOfSickDays;
+	public boolean setPlaceInParty(int placeInParty) { // boolean since it says so in the task
+		this.placeInParty = placeInParty;
+		return true;
 	}
 	
 	public String toString() {
@@ -42,7 +48,7 @@ public class SickCitizen extends Citizen implements Sickable {
 	
 	@Override
 	public boolean equals(Object obj) {
-		SickCitizen other= (SickCitizen) obj;
+		SickCandidate other= (SickCandidate) obj;
 		return(numOfSickDays==other.numOfSickDays&& super.equals(other));
 	}
 	
@@ -54,7 +60,7 @@ public class SickCitizen extends Citizen implements Sickable {
 		if (this.age < 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {
-			this.ballot = (Ballot<SickCitizen>) ballot;
+			this.ballot = (Ballot<SickCandidate>) ballot;
 			return true;
 		}
 	}
@@ -78,5 +84,5 @@ public class SickCitizen extends Citizen implements Sickable {
 			System.out.println("thank you, have a nice day!");
 		}
 	}
-	
+
 }

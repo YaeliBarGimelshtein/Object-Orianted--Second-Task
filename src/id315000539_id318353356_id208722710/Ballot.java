@@ -3,15 +3,15 @@ package id315000539_id318353356_id208722710;
 import java.util.Scanner;
 import java.util.Vector;
 
-public class Ballot {
+public class Ballot<T extends Citizen> {
 	public static int ID = 1;
-	protected int id;
-	protected String address;
-	protected Vector<Citizen> votersList;
-	protected double votersPercent;
-	protected int numberOfActualVoters;
-	protected int potentialVoters;
-	protected Vector<BallotsResults> results;
+	private int id;
+	private String address;
+	private Vector<T> votersList;
+	private double votersPercent;
+	private int numberOfActualVoters;
+	private int potentialVoters;
+	private Vector<BallotsResults> results;
 
 	public Ballot(String address, Vector<Party> parties) {
 		this.id = ID++;
@@ -39,7 +39,7 @@ public class Ballot {
 		this.id = ID++;
 	}
 
-	public Vector<Citizen> getvotersList() {
+	public Vector<T> getvotersList() {
 		return this.votersList;
 	}
 
@@ -47,39 +47,7 @@ public class Ballot {
 		calculateVotersPercent();
 		return this.votersPercent;
 	}
-
-	public Vector<BallotsResults> getResults() {
-		return this.results;
-	}
-
-	public int getId() {
-		return this.id;
-	}
-
-	public void addVoter(Citizen voter) {
-		votersList.add(voter); // (pointing at each other)
-		potentialVoters++;
-		
-	}
-
-	public boolean belongs(Citizen voter) {
-		if (voter.getAge() >= 18) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean vote(Party selectedParty, Citizen voter) {
-		for (int i = 0; i < results.size(); i++) {
-			if (results.get(i).getParty().equals(selectedParty)) {
-				results.get(i).addVote();
-				numberOfActualVoters++;
-				return true;
-			}
-		}
-		return false;
-	}
-
+	
 	private void calculateVotersPercent() {
 		if (potentialVoters == 0) {
 			votersPercent = 0;
@@ -90,6 +58,32 @@ public class Ballot {
 		votersPercent = Math.round(votersPercent);
 		votersPercent = votersPercent / 100;
 	}
+
+	public Vector<BallotsResults> getResults() {
+		return this.results;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void addVoter(T voter) {
+		votersList.add(voter); 
+		potentialVoters++;
+	}
+
+	public boolean vote(Party selectedParty, T voter) {
+		for (int i = 0; i < results.size(); i++) {
+			if (results.get(i).getParty().equals(selectedParty)) {
+				results.get(i).addVote();
+				numberOfActualVoters++;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
 
 	public void showResults() {
 		StringBuffer str = new StringBuffer("Ballot number " + this.id + " located in " + this.address + " has "
@@ -106,12 +100,5 @@ public class Ballot {
 
 	public String toString() {
 		return "Ballot number " + this.id + " located in " + this.address;
-	}
-
-	public boolean equals(Ballot other) {
-		if (this.id == other.id)
-			return true;
-		else
-			return false;
 	}
 }
