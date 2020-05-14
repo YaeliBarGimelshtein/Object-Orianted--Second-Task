@@ -1,1 +1,3 @@
 Issues we Know about:
+
+objects that inherits from Citizen will allways have a NULL Ballot.

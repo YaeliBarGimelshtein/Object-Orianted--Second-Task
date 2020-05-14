@@ -24,7 +24,7 @@ public class SickCitizen extends Citizen implements Sickable {
 			numOfSickDays=days;
 		}
 		else {
-			numOfSickDays=0;
+			numOfSickDays=1;
 		}
 	}
 	
@@ -51,11 +51,12 @@ public class SickCitizen extends Citizen implements Sickable {
 	}
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<SickCitizen>) ballot;
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
 		}
 	}
 	public void vote(Scanner scan, Vector<Party> parties) {
@@ -78,5 +79,4 @@ public class SickCitizen extends Citizen implements Sickable {
 			System.out.println("thank you, have a nice day!");
 		}
 	}
-	
 }

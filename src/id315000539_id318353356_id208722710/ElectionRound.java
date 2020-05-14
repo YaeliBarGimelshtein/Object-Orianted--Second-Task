@@ -115,7 +115,7 @@ public class ElectionRound implements Menuable {
 	}
 
 
-	public boolean setRunningParties(Vector<Party> runningParties) { // boolean since it says so in the task
+	public boolean setRunningParties(Vector<Party> runningParties) { 
 		this.runningParties=runningParties;
 		return true;
 	}
@@ -187,8 +187,6 @@ public class ElectionRound implements Menuable {
 	}
 
 	public boolean setBallotsAndVoters() throws ageOutOfRange {
-		// boolean since it says so in the task
-		//no need for try and catch sicne this function only for hard code
 		for (int i = 0; i < citizensVoters.size(); i++) {
 			citizensVoters.get(i).setBallot(citizenBallot.get(0));
 			citizenBallot.get(0).addVoter(citizensVoters.get(i));
@@ -218,7 +216,6 @@ public class ElectionRound implements Menuable {
 			sickCandidatesVoters.getObjectAtIndex(i).setBallot(sickCandidateBallot.get(0));
 			sickCandidateBallot.get(0).addVoter(sickCandidatesVoters.getObjectAtIndex(i));
 		}
-		
 		return true;
 	}
 	
@@ -237,16 +234,12 @@ public class ElectionRound implements Menuable {
 	private boolean matchBallotAndCitizen(Citizen citizen) throws ageOutOfRange {
 		if (citizen.getClass() == Soldier.class) {
 			citizen.setBallot(this.soldierBallot.get(0));
-			SoldiersVoters.add((Soldier) citizen);
 		} else if (citizen.getClass() == SickSoldier.class) {
 			citizen.setBallot(this.sickSoldierBallot.get(0));
-			SickSoldiersVoters.add((SickSoldier) citizen);
 		} else if (citizen.getClass() == Citizen.class) {
 			citizen.setBallot(this.citizenBallot.get(0));
-			citizensVoters.add(citizen);
 		} else if (citizen.getClass() == SickCitizen.class) {
 			citizen.setBallot(this.sickCitizenBallot.get(0));
-			sickCitizens.add((SickCitizen) citizen);
 		} else if (citizen.getClass() ==Candidate.class) {
 			citizen.setBallot(this.candidateBallot.get(0));
 		} else if (citizen.getClass() ==SickCandidate.class) {
@@ -400,6 +393,7 @@ public class ElectionRound implements Menuable {
 				isAbleToVote=setBallotAndASingleCitizen(temp);
 				if(isAbleToVote) {
 					SickCitizensVoters.add(temp);
+					this.sickCitizenBallot.get(0).addVoter(temp);
 				}
 			}
 			break;
@@ -411,6 +405,7 @@ public class ElectionRound implements Menuable {
 			} else {
 				System.out.print("Citizen was added successfuly");
 				isAbleToVote=setBallotAndASingleCitizen(temp2);
+				this.soldierBallot.get(0).addVoter(temp2);
 			}
 			break;
 		case 3:
@@ -423,6 +418,7 @@ public class ElectionRound implements Menuable {
 				isAbleToVote=setBallotAndASingleCitizen(temp3);
 				if(isAbleToVote) {
 					citizensVoters.add(temp3);
+					citizenBallot.get(0).addVoter(temp3);
 				}
 			}
 			break;
@@ -434,6 +430,7 @@ public class ElectionRound implements Menuable {
 			} else {
 				System.out.print("Citizen was added successfuly");
 				isAbleToVote=setBallotAndASingleCitizen(temp4);
+				sickSoldierBallot.get(0).addVoter(temp4);
 			}
 			break;
 		}
@@ -444,7 +441,6 @@ public class ElectionRound implements Menuable {
 		}
 	}
 
-	
 
 	public void addAParty(Scanner scan) {
 		System.out.println("You have chose to add a party, please enter details:");

@@ -10,7 +10,6 @@ public class SickSoldier extends Soldier implements Sickable{
 	public SickSoldier(String name, int ID, int year,boolean weapon,int days) throws IDOutOfRange  {
 		super(name,ID,year,weapon);
 		numOfSickDays=days;
-
 	}
 	
 	public SickSoldier(Scanner scan) throws IDOutOfRange, ageOutOfRange {
@@ -44,12 +43,12 @@ public class SickSoldier extends Soldier implements Sickable{
 	}
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<SickSoldier>) ballot;
-			//ballot.addVoter(this); // (pointing at each other)
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
 		}
 	}
 	public void vote(Scanner scan, Vector<Party> parties) {

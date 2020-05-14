@@ -47,7 +47,7 @@ public class Soldier extends Citizen {
 		Soldier other= (Soldier) obj;
 		return (carryWeapon==other.carryWeapon && super.equals(other));
 	}
-	private void checkAge() throws ageOutOfRange {
+	protected void checkAge() throws ageOutOfRange {
 		if (this.getAge() < 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		}
@@ -57,11 +57,12 @@ public class Soldier extends Citizen {
 	}
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<Soldier>) ballot;
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
 		}
 	}
 	

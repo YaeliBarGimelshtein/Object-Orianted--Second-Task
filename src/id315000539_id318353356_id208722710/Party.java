@@ -58,8 +58,6 @@ public class Party {
 		currentCandidates++;
 		placeInParty++;
 	}
-	
-	
 
 	public Candidate addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("please enter candidate details: ");
@@ -92,10 +90,9 @@ public class Party {
 		}
 	}
 	
-	
-	
-
-	public boolean equals(Party party) {
+	@Override
+	public boolean equals(Object obj) {
+		Party party= (Party) obj;
 		if (party != null) {
 			if (this.name.equals(party.name)) {
 				return true;
