@@ -13,7 +13,7 @@ public class Soldier extends Citizen {
 		this.carryWeapon=weapon;
 	}
 	
-	public Soldier(Scanner scan) throws IDOutOfRange {
+	public Soldier(Scanner scan) throws IDOutOfRange,ageOutOfRange {
 		super(scan);
 		try {
 			System.out.println("please let us know if you carry a weapon(true/false):");
@@ -24,7 +24,7 @@ public class Soldier extends Citizen {
 			do {
 				System.out.println("We are sorry, the age of a Soldier is over 21 or less 18, please re-enter year");
 				year = scan.nextInt();
-			} while (year <= 1999 && year>=2002);
+			} while (ElectionRound.ELECTION_YEAR -year>18 && ElectionRound.ELECTION_YEAR -year<22 );
 			this.birthYear = year;
 			setAge();
 		}
@@ -61,10 +61,10 @@ public class Soldier extends Citizen {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {
 			this.ballot = (Ballot<Soldier>) ballot;
-			//ballot.addVoter(this); // (pointing at each other)
 			return true;
 		}
 	}
+	
 	public void vote(Scanner scan, Vector<Party> parties) {
 		System.out.println("Citizen: " + this.name + " ID: " + this.ID + " do you want to vote? Y for yes/N for no: ");
 		if (scan.next().toUpperCase().charAt(0) == 'Y') {

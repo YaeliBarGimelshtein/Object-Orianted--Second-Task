@@ -61,7 +61,7 @@ public class Party {
 		placeInParty++;
 	}
 
-	public Citizen addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
+	public Candidate addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("please enter candidate details: ");
 		try {
 			Candidate temp = new Candidate(scan, this);
@@ -76,6 +76,24 @@ public class Party {
 			return null;
 		}
 	}
+	public SickCandidate addSickCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
+		System.out.println("please enter candidate details: ");
+		try {
+			SickCandidate temp = new SickCandidate(scan, this);
+			candidateList.add(temp);
+			temp.setPlaceInParty(placeInParty);
+			currentCandidates++;
+			placeInParty++;
+			System.out.println("the candidadate was added successfuly");
+			return temp;
+		} catch (ageOutOfRange notBigEnough) {
+			System.out.println("not possible to add, not big enough");
+			return null;
+		}
+	}
+	
+	
+	
 
 	public boolean equals(Party party) {
 		if (party != null) {

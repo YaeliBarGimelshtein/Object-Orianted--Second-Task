@@ -68,7 +68,6 @@ public class Citizen {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {
 			this.ballot = (Ballot<Citizen>) ballot;
-			//ballot.addVoter(this); // (pointing at each other)
 			return true;
 		}
 	}

@@ -13,7 +13,7 @@ public class SickSoldier extends Soldier implements Sickable{
 
 	}
 	
-	public SickSoldier(Scanner scan) throws IDOutOfRange {
+	public SickSoldier(Scanner scan) throws IDOutOfRange, ageOutOfRange {
 		super(scan);
 		System.out.println("please let us know how many days you are sick:");
 		numOfSickDays=scan.nextInt();

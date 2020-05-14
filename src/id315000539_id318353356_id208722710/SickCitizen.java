@@ -12,10 +12,6 @@ public class SickCitizen extends Citizen implements Sickable {
 		setNumOfSickDays(days);
 	}
 	
-	public SickCitizen(Citizen citizen,int days) {
-			super(citizen);
-			setNumOfSickDays(days);
-		}
 	
 	public SickCitizen(Scanner scan)throws IDOutOfRange {
 		super(scan);
@@ -60,7 +56,6 @@ public class SickCitizen extends Citizen implements Sickable {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {
 			this.ballot = (Ballot<SickCitizen>) ballot;
-			//ballot.addVoter(this); // (pointing at each other)
 			return true;
 		}
 	}

@@ -20,15 +20,29 @@ public class Candidate extends Citizen {
 
 	public Candidate(Scanner scan, Party party) throws ageOutOfRange, IDOutOfRange {
 		super(scan);
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to be a candidate yet");
-		} else {
+		try {
 			this.affiliationToParty = party;
+			checkAge();
+		}catch (ageOutOfRange notBigEnough) {
+			int year = 0;
+			do {
+				System.out.println("We are sorry, the age of a Candidate less 18, please re-enter year");
+				year = scan.nextInt();
+			} while (ElectionRound.ELECTION_YEAR -year>18);
+			this.birthYear = year;
+			setAge();
 		}
+		
 	}
 
 	public Party getAffiliationToParty() {
 		return affiliationToParty;
+	}
+	
+	private void checkAge() throws ageOutOfRange {
+		if (this.getAge() < 18) {
+			throw new ageOutOfRange("Not legal to vote yet");
+		}
 	}
 
 	public int getPlaceInParty() {
@@ -46,9 +60,9 @@ public class Candidate extends Citizen {
 	}
 
 	public String toString() {
-		String str= super.toString() + ". He is also a Candidate, his party is " + affiliationToParty.getName() + ".";
+		String str= super.toString() + ". He is also a Candidate, his party is " + affiliationToParty.getName();
 		if (ballot != null) {
-			str = str + ", votes at ballot number " + ballot.getId() + ". ";
+			str = str + ", votes at ballot number " + ballot.getId() ;
 		}
 		return str;
 	}
