@@ -33,6 +33,11 @@ public class SickCandidate extends Candidate implements Sickable {
 		}
 	}
 	
+	public boolean setPlaceInParty(int placeInParty) { // boolean since it says so in the task
+		this.placeInParty = placeInParty;
+		return true;
+	}
+	
 	public String toString() {
 		String str= super.toString()+". He is also sick for "+this.numOfSickDays+" days";
 		if (ballot != null) {

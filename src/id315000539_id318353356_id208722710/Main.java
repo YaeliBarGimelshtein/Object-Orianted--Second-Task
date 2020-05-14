@@ -8,10 +8,7 @@ public class Main {
 
 	//2. each object that is not citizen gets 2 ballots even though in citizen
 	//   it is private and not supose to go..
-	//3. not sure if to add an option for sick candidates
-	
-	
-	
+
 	public static void main(String[] args) throws ageOutOfRange, IDOutOfRange {
 		
 		Scanner scan = new Scanner(System.in);
@@ -166,9 +163,6 @@ public class Main {
 		Ballot<SickCandidate> b6= new Ballot<SickCandidate>("Yaffo", runningParties);
 		arrayB6.add(b6);
 		firstRound.setSickCandidatesBallot(arrayB6);
-		
-		
-		
 		
 		firstRound.setBallotsAndVoters(); // citizens get ballots && ballots get citizens
 	}

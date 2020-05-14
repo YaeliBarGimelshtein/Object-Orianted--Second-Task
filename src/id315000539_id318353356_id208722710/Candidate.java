@@ -4,9 +4,9 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Candidate extends Citizen {
-	private Ballot<Citizen> ballot;
-	private Party affiliationToParty;
-	private int placeInParty;
+	private Ballot<Candidate> ballot;
+	protected Party affiliationToParty;
+	protected int placeInParty;
 
 	public Candidate(String name, int ID, int year, Party party) throws ageOutOfRange, IDOutOfRange {
 		super(name, ID, year);
@@ -75,8 +75,7 @@ public class Candidate extends Citizen {
 		if (this.age <= 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		} else {
-			this.ballot = (Ballot<Citizen>) ballot;
-			//ballot.addVoter(this); // (pointing at each other)
+			this.ballot = (Ballot<Candidate>) ballot;
 			return true;
 		}
 	}

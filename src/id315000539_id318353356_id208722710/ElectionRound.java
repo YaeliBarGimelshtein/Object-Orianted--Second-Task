@@ -30,9 +30,8 @@ public class ElectionRound implements Menuable {
 	private Vector <Ballot <Candidate>> candidateBallot;
 	private Vector <Ballot <SickCandidate>> sickCandidateBallot;
 	
-	
-	private int ActualNumberOfVoters = 0; 
-	private int numberOfvoters = 0;
+	private int ActualNumberOfVoters; 
+	private int numberOfvoters;
 
 	public ElectionRound(int electionMonth, int electionYear) {
 		setElectionMonth(electionMonth);
@@ -222,6 +221,7 @@ public class ElectionRound implements Menuable {
 		
 		return true;
 	}
+	
 
 	public <T extends Citizen> boolean setBallotAndASingleCitizen(T temp)throws ageOutOfRange { 																								
 			try {
@@ -254,11 +254,6 @@ public class ElectionRound implements Menuable {
 		}
 		return true;
 	}
-
-//	public boolean setBallotAndASingleCandidate(Candidate candidate) throws ageOutOfRange {
-//		matchBallotAndCitizen(candidate);
-//		return true;
-//	}
 
 	private double calculateTotalVotingPercent() {
 		if (numberOfvoters == 0) {

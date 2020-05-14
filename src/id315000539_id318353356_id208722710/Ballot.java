@@ -47,6 +47,17 @@ public class Ballot<T extends Citizen> {
 		calculateVotersPercent();
 		return this.votersPercent;
 	}
+	
+	private void calculateVotersPercent() {
+		if (potentialVoters == 0) {
+			votersPercent = 0;
+			return;
+		}
+		votersPercent = ((double) numberOfActualVoters) / ((double) potentialVoters) * 100;
+		votersPercent = votersPercent * 100;
+		votersPercent = Math.round(votersPercent);
+		votersPercent = votersPercent / 100;
+	}
 
 	public Vector<BallotsResults> getResults() {
 		return this.results;
@@ -57,7 +68,7 @@ public class Ballot<T extends Citizen> {
 	}
 
 	public void addVoter(T voter) {
-		votersList.add(voter); // (pointing at each other)
+		votersList.add(voter); 
 		potentialVoters++;
 	}
 
@@ -72,16 +83,7 @@ public class Ballot<T extends Citizen> {
 		return false;
 	}
 
-	private void calculateVotersPercent() {
-		if (potentialVoters == 0) {
-			votersPercent = 0;
-			return;
-		}
-		votersPercent = ((double) numberOfActualVoters) / ((double) potentialVoters) * 100;
-		votersPercent = votersPercent * 100;
-		votersPercent = Math.round(votersPercent);
-		votersPercent = votersPercent / 100;
-	}
+	
 
 	public void showResults() {
 		StringBuffer str = new StringBuffer("Ballot number " + this.id + " located in " + this.address + " has "

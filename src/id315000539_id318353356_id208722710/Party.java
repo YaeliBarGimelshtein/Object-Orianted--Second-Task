@@ -7,7 +7,6 @@ public class Party {
 	public enum Faction {
 		Right, Left, Center;
 	}
-
 	private Faction side;
 	private String name;
 	private String date;
@@ -35,8 +34,7 @@ public class Party {
 		this.candidateList = new Vector<>();
 	}
 
-	private boolean setFaction(String faction) { // boolean since it says so in
-													// the task
+	private boolean setFaction(String faction) { // boolean since it says so in the task
 		this.side = Faction.valueOf(faction);
 		return true;
 	}
@@ -54,12 +52,14 @@ public class Party {
 		return numberOfVotes;
 	}
 
-	public void addCandidate(Candidate candidate) {
+	public<T extends Candidate> void addCandidate(T candidate) {
 		candidateList.add(candidate);
 		candidate.setPlaceInParty(placeInParty); // (pointing at each other)
 		currentCandidates++;
 		placeInParty++;
 	}
+	
+	
 
 	public Candidate addCandidate(Scanner scan) throws ageOutOfRange, IDOutOfRange {
 		System.out.println("please enter candidate details: ");

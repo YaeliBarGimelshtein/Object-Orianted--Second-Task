@@ -12,7 +12,6 @@ public class SickCitizen extends Citizen implements Sickable {
 		setNumOfSickDays(days);
 	}
 	
-	
 	public SickCitizen(Scanner scan)throws IDOutOfRange {
 		super(scan);
 		System.out.println("please let us know how many days you have been sick:");
