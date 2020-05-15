@@ -462,13 +462,13 @@ public class ElectionRound implements Menuable {
 			Candidate temp = (Candidate) runningParties.get(choise - 1).addCandidate(scan);
 			if (temp != null) {
 				matchBallotAndCitizen(temp);
-				citizens.add(temp);
+				candidatesVoters.add(temp);
 			}
 		} else if (typeCandidate == 2) {
 			SickCandidate temp2 = (SickCandidate) runningParties.get(choise - 1).addSickCandidate(scan);
 			if (temp2 != null) {
 				matchBallotAndCitizen(temp2);
-				citizens.add(temp2);
+				sickCandidatesVoters.add(temp2);
 			}
 		}
 	}
