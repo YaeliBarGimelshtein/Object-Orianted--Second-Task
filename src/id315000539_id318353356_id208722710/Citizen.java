@@ -153,6 +153,7 @@ public class Citizen {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting = false;
 		}
 	}
 

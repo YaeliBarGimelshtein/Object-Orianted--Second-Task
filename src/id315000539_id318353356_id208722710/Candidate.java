@@ -63,7 +63,7 @@ public class Candidate extends Citizen {
 	public String toString() {
 		String str= super.toString() + ". He is also a Candidate, his party is " + affiliationToParty.getName();
 		if (ballot != null) {
-			str = str + ", votes at ballot number " + ballot.getId() ;
+			str = str + ", votes at ballot number " + ballot.getId() +".";
 		}
 		return str;
 	}
@@ -94,6 +94,7 @@ public class Candidate extends Citizen {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting = false;
 		}
 	}
 }

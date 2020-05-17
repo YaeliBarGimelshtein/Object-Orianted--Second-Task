@@ -70,6 +70,7 @@ public class SickCandidate extends Candidate implements Sickable {
 			System.out.println("Do you have a protective suit? Y for yes/N for no: ");
 			if (scan.next().toUpperCase().charAt(0) == 'N') {
 				System.out.println("We are very sorry, you can't vote");
+				isVoting=false;
 				return;
 			}
 			System.out.println("You are voting in : " + this.ballot);
@@ -82,6 +83,7 @@ public class SickCandidate extends Candidate implements Sickable {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting=false;
 		}
 	}
 

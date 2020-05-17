@@ -1,3 +1,6 @@
-Issues we Know about:
+Issues we know about:
 
-objects that inherits from Citizen will allways have a NULL Ballot.
+1. Objects that inherits from Citizen will allways have a NULL Ballot.
+2. Objects that inherits from Citizen will allways get the first ballot in the matching array
+since there was no explenation about the logics- how citizen gets a ballot when there is 
+more than one for each type. Our solution was just to give them the first ballot.

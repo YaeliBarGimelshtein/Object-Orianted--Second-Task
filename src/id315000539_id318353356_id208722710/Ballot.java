@@ -83,7 +83,6 @@ public class Ballot<T extends Citizen> {
 		return false;
 	}
 
-	
 
 	public void showResults() {
 		StringBuffer str = new StringBuffer("Ballot number " + this.id + " located in " + this.address + " has "

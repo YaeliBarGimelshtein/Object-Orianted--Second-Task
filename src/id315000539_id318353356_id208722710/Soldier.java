@@ -22,9 +22,9 @@ public class Soldier extends Citizen {
 		} catch (ageOutOfRange notBigEnough) {
 			int year = 0;
 			do {
-				System.out.println("We are sorry, the age of a Soldier is over 21 or less 18, please re-enter year");
+				System.out.println("We are sorry, the age of a Soldier is less 18, please re-enter year");
 				year = scan.nextInt();
-			} while (ElectionRound.ELECTION_YEAR -year>18 && ElectionRound.ELECTION_YEAR -year<22 );
+			} while (ElectionRound.ELECTION_YEAR -year<18 );
 			this.birthYear = year;
 			setAge();
 		}
@@ -79,6 +79,7 @@ public class Soldier extends Citizen {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting=false;
 		}
 	}
 }
