@@ -10,11 +10,12 @@ public class Candidate extends Citizen {
 
 	public Candidate(String name, int ID, int year, Party party) throws ageOutOfRange, IDOutOfRange {
 		super(name, ID, year);
+		try {
+		party.addCandidate(this);
+		checkAge();
 		this.affiliationToParty = party;
-		if (this.age < 18) {
+		}catch(ageOutOfRange notBigEnough) {
 			throw new ageOutOfRange("Not legal to be a candidate yet");
-		} else {
-			party.addCandidate(this);
 		}
 	}
 
@@ -28,7 +29,7 @@ public class Candidate extends Citizen {
 			do {
 				System.out.println("We are sorry, the age of a Candidate less 18, please re-enter year");
 				year = scan.nextInt();
-			} while (ElectionRound.ELECTION_YEAR -year>18);
+			} while (ElectionRound.ELECTION_YEAR -year<18);
 			this.birthYear = year;
 			setAge();
 		}
@@ -39,7 +40,7 @@ public class Candidate extends Citizen {
 		return affiliationToParty;
 	}
 	
-	private void checkAge() throws ageOutOfRange {
+	protected void checkAge() throws ageOutOfRange {
 		if (this.getAge() < 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		}
@@ -62,7 +63,7 @@ public class Candidate extends Citizen {
 	public String toString() {
 		String str= super.toString() + ". He is also a Candidate, his party is " + affiliationToParty.getName();
 		if (ballot != null) {
-			str = str + ", votes at ballot number " + ballot.getId() ;
+			str = str + ", votes at ballot number " + ballot.getId() +".";
 		}
 		return str;
 	}
@@ -72,11 +73,12 @@ public class Candidate extends Citizen {
 	}
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age <= 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<Candidate>) ballot;
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
 		}
 	}
 	public void vote(Scanner scan, Vector<Party> parties) {
@@ -92,6 +94,7 @@ public class Candidate extends Citizen {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting = false;
 		}
 	}
 }

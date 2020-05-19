@@ -22,9 +22,9 @@ public class Soldier extends Citizen {
 		} catch (ageOutOfRange notBigEnough) {
 			int year = 0;
 			do {
-				System.out.println("We are sorry, the age of a Soldier is over 21 or less 18, please re-enter year");
+				System.out.println("We are sorry, the age of a Soldier is less 18, please re-enter year");
 				year = scan.nextInt();
-			} while (ElectionRound.ELECTION_YEAR -year>18 && ElectionRound.ELECTION_YEAR -year<22 );
+			} while (ElectionRound.ELECTION_YEAR -year<18 );
 			this.birthYear = year;
 			setAge();
 		}
@@ -47,7 +47,7 @@ public class Soldier extends Citizen {
 		Soldier other= (Soldier) obj;
 		return (carryWeapon==other.carryWeapon && super.equals(other));
 	}
-	private void checkAge() throws ageOutOfRange {
+	protected void checkAge() throws ageOutOfRange {
 		if (this.getAge() < 18) {
 			throw new ageOutOfRange("Not legal to vote yet");
 		}
@@ -57,11 +57,12 @@ public class Soldier extends Citizen {
 	}
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<Soldier>) ballot;
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
 		}
 	}
 	
@@ -78,6 +79,7 @@ public class Soldier extends Citizen {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting=false;
 		}
 	}
 }

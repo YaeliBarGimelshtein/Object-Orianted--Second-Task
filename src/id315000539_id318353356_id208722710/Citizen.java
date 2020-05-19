@@ -12,11 +12,15 @@ public class Citizen {
 	protected boolean isVoting;
 	protected boolean idCorrect;
 
-	public Citizen(String name, int ID, int year)  {
+	public Citizen(String name, int ID, int year) throws IDOutOfRange  {
+		try {
 		this.name = name;
-		this.ID=ID;
+		setID(ID);
 		setYear(year);
 		setAge();
+		}catch(IDOutOfRange wrongID){
+			throw new IDOutOfRange("Illegal ID");
+		}	
 	}
 
 	public Citizen(Scanner scan) throws IDOutOfRange {
@@ -64,11 +68,18 @@ public class Citizen {
 
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<Citizen>) ballot;
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
+		}
+	}
+	
+	protected void checkAge() throws ageOutOfRange {
+		if (this.getAge() < 18) {
+			throw new ageOutOfRange("Not legal to vote yet");
 		}
 	}
 
@@ -142,6 +153,7 @@ public class Citizen {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting = false;
 		}
 	}
 

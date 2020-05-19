@@ -24,7 +24,7 @@ public class SickCitizen extends Citizen implements Sickable {
 			numOfSickDays=days;
 		}
 		else {
-			numOfSickDays=0;
+			numOfSickDays=1;
 		}
 	}
 	
@@ -36,6 +36,8 @@ public class SickCitizen extends Citizen implements Sickable {
 		String str= super.toString()+". He is also sick for "+this.numOfSickDays+" days";
 		if (ballot != null) {
 			str = str + ", votes at ballot number " + ballot.getId() + ". ";
+		}else {
+			str= str+".";
 		}
 		return str;
 	}
@@ -51,11 +53,12 @@ public class SickCitizen extends Citizen implements Sickable {
 	}
 	
 	public boolean setBallot(Ballot<? extends Citizen> ballot) throws ageOutOfRange { // boolean since it says so un the taks
-		if (this.age < 18) {
-			throw new ageOutOfRange("Not legal to vote yet");
-		} else {
+		try {
+			checkAge();
 			this.ballot = (Ballot<SickCitizen>) ballot;
 			return true;
+		} catch (ageOutOfRange notBigEnough) {
+			return false;
 		}
 	}
 	public void vote(Scanner scan, Vector<Party> parties) {
@@ -64,6 +67,7 @@ public class SickCitizen extends Citizen implements Sickable {
 			System.out.println("Do you have a protective suit? Y for yes/N for no: ");
 			if (scan.next().toUpperCase().charAt(0) == 'N') {
 				System.out.println("We are very sorry, you can't vote");
+				isVoting=false;
 				return;
 			}
 			System.out.println("You are voting in : " + this.ballot);
@@ -76,7 +80,7 @@ public class SickCitizen extends Citizen implements Sickable {
 			isVoting = true;
 		} else {
 			System.out.println("thank you, have a nice day!");
+			isVoting=false;
 		}
 	}
-	
 }

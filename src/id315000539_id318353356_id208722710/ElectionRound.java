@@ -115,7 +115,7 @@ public class ElectionRound implements Menuable {
 	}
 
 
-	public boolean setRunningParties(Vector<Party> runningParties) { // boolean since it says so in the task
+	public boolean setRunningParties(Vector<Party> runningParties) { 
 		this.runningParties=runningParties;
 		return true;
 	}
@@ -187,8 +187,6 @@ public class ElectionRound implements Menuable {
 	}
 
 	public boolean setBallotsAndVoters() throws ageOutOfRange {
-		// boolean since it says so in the task
-		//no need for try and catch sicne this function only for hard code
 		for (int i = 0; i < citizensVoters.size(); i++) {
 			citizensVoters.get(i).setBallot(citizenBallot.get(0));
 			citizenBallot.get(0).addVoter(citizensVoters.get(i));
@@ -218,7 +216,6 @@ public class ElectionRound implements Menuable {
 			sickCandidatesVoters.getObjectAtIndex(i).setBallot(sickCandidateBallot.get(0));
 			sickCandidateBallot.get(0).addVoter(sickCandidatesVoters.getObjectAtIndex(i));
 		}
-		
 		return true;
 	}
 	
@@ -237,16 +234,12 @@ public class ElectionRound implements Menuable {
 	private boolean matchBallotAndCitizen(Citizen citizen) throws ageOutOfRange {
 		if (citizen.getClass() == Soldier.class) {
 			citizen.setBallot(this.soldierBallot.get(0));
-			SoldiersVoters.add((Soldier) citizen);
 		} else if (citizen.getClass() == SickSoldier.class) {
 			citizen.setBallot(this.sickSoldierBallot.get(0));
-			SickSoldiersVoters.add((SickSoldier) citizen);
 		} else if (citizen.getClass() == Citizen.class) {
 			citizen.setBallot(this.citizenBallot.get(0));
-			citizensVoters.add(citizen);
 		} else if (citizen.getClass() == SickCitizen.class) {
 			citizen.setBallot(this.sickCitizenBallot.get(0));
-			sickCitizens.add((SickCitizen) citizen);
 		} else if (citizen.getClass() ==Candidate.class) {
 			citizen.setBallot(this.candidateBallot.get(0));
 		} else if (citizen.getClass() ==SickCandidate.class) {
@@ -349,7 +342,7 @@ public class ElectionRound implements Menuable {
 		System.out.println("You have chose to add a ballot:");
 		System.out.println(
 				"Press 1 for Sick Citizen's ballot\nPress 2 for Soldier's ballot" + "\nPress 3 for a Citizens "
-						+ "ballot\nPress 4 for Sick Soldier's regular ballot\nPress 5 for Candidate's Ballot\n"
+						+ "ballot\nPress 4 for Sick Soldier's ballot\nPress 5 for Candidate's Ballot\n"
 						+ "press 6 for Sick Candidate's Ballot");
 						
 		int choise = scan.nextInt();
@@ -400,6 +393,7 @@ public class ElectionRound implements Menuable {
 				isAbleToVote=setBallotAndASingleCitizen(temp);
 				if(isAbleToVote) {
 					SickCitizensVoters.add(temp);
+					this.sickCitizenBallot.get(0).addVoter(temp);
 				}
 			}
 			break;
@@ -411,6 +405,7 @@ public class ElectionRound implements Menuable {
 			} else {
 				System.out.print("Citizen was added successfuly");
 				isAbleToVote=setBallotAndASingleCitizen(temp2);
+				this.soldierBallot.get(0).addVoter(temp2);
 			}
 			break;
 		case 3:
@@ -423,6 +418,7 @@ public class ElectionRound implements Menuable {
 				isAbleToVote=setBallotAndASingleCitizen(temp3);
 				if(isAbleToVote) {
 					citizensVoters.add(temp3);
+					citizenBallot.get(0).addVoter(temp3);
 				}
 			}
 			break;
@@ -434,6 +430,7 @@ public class ElectionRound implements Menuable {
 			} else {
 				System.out.print("Citizen was added successfuly");
 				isAbleToVote=setBallotAndASingleCitizen(temp4);
+				sickSoldierBallot.get(0).addVoter(temp4);
 			}
 			break;
 		}
@@ -444,7 +441,6 @@ public class ElectionRound implements Menuable {
 		}
 	}
 
-	
 
 	public void addAParty(Scanner scan) {
 		System.out.println("You have chose to add a party, please enter details:");
@@ -466,48 +462,59 @@ public class ElectionRound implements Menuable {
 			Candidate temp = (Candidate) runningParties.get(choise - 1).addCandidate(scan);
 			if (temp != null) {
 				matchBallotAndCitizen(temp);
-				citizens.add(temp);
+				candidatesVoters.add(temp);
 			}
 		} else if (typeCandidate == 2) {
 			SickCandidate temp2 = (SickCandidate) runningParties.get(choise - 1).addSickCandidate(scan);
 			if (temp2 != null) {
 				matchBallotAndCitizen(temp2);
-				citizens.add(temp2);
+				sickCandidatesVoters.add(temp2);
 			}
 		}
 	}
 
 	public void showAllBallots() {
 		System.out.println("Here are all the ballots in this election:\n");
-		for (int i = 0; i < citizenBallot.size(); i++) {
+		if(citizenBallot.size()>0) {
 			System.out.println("Citizen's ballots:");
-			System.out.println(citizenBallot.get(i).toString());
-			System.out.println();
+			for (int i = 0; i < citizenBallot.size(); i++) {
+				System.out.println(citizenBallot.get(i).toString());
+			}
 		}
-		for (int i = 0; i < sickCitizenBallot.size(); i++) {
+		System.out.println();
+		if(sickCitizenBallot.size()>0) {
 			System.out.println("Sick Citizens Ballots:");
-			System.out.println(sickCitizenBallot.get(i).toString());
-			System.out.println();
+			for (int i = 0; i < sickCitizenBallot.size(); i++) {
+				System.out.println(sickCitizenBallot.get(i).toString());
+			}
 		}
-		for (int i = 0; i < soldierBallot.size(); i++) {
+		System.out.println();
+		if (soldierBallot.size() > 0) {
 			System.out.println("Soldiers Ballots:");
-			System.out.println(soldierBallot.get(i).toString());
-			System.out.println();
+			for (int i = 0; i < soldierBallot.size(); i++) {
+				System.out.println(soldierBallot.get(i).toString());
+			}
 		}
-		
-		for (int i = 0; i < sickSoldierBallot.size(); i++) {
+		System.out.println();
+		if(sickSoldierBallot.size()>0) {
 			System.out.println("Sick Soldiers ballots:");
-			System.out.println(sickSoldierBallot.get(i).toString());
+			for (int i = 0; i < sickSoldierBallot.size(); i++) {
+				System.out.println(sickSoldierBallot.get(i).toString());
+			}
 		}
-		
-		for (int i = 0; i < candidateBallot.size(); i++) {
+		System.out.println();
+		if(candidateBallot.size()>0) {
 			System.out.println("Candidates ballots:");
-			System.out.println(candidateBallot.get(i).toString());
+			for (int i = 0; i < candidateBallot.size(); i++) {
+				System.out.println(candidateBallot.get(i).toString());
+			}
 		}
-		
-		for (int i = 0; i < sickCandidateBallot.size(); i++) {
+		System.out.println();
+		if(sickCandidateBallot.size()>0) {
 			System.out.println("Sick Candidates ballots:");
-			System.out.println(sickCandidateBallot.get(i).toString());
+			for (int i = 0; i < sickCandidateBallot.size(); i++) {
+				System.out.println(sickCandidateBallot.get(i).toString());
+			}
 		}
 		System.out.println();
 	}
